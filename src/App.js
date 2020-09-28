@@ -19,7 +19,6 @@ function App() {
     };
 
     const updateSigninStatus = isSignedIn => {
-      console.log(isSignedIn);
       if (isSignedIn) {
         setLogined(true);
       } else {
