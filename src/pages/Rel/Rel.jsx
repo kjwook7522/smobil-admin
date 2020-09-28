@@ -1,14 +1,13 @@
 import React from "react";
+import { Header, Category } from "./components";
 import "./Rel.css";
 
 function Rel() {
-  const handleSignoutClick = () => {
-    window.gapi.auth2.getAuthInstance().signOut();
-  }
   return (
-    <>
-      <button onClick={handleSignoutClick}>logout</button>
-    </>
+    <div id="rel">
+      <Header />
+      <Category />
+    </div>
   );
 }
 
