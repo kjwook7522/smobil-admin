@@ -8,7 +8,7 @@ function Login() {
   return (
     <section id="login">
       <div className="login-frame">
-        <img src="/logo.png" alt="logo" />
+        <img src="/logo_bl.png" alt="logo" />
         <button onClick={handleAuthClick}>Google로 로그인</button>
       </div>
     </section>
