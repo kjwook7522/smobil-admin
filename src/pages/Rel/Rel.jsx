@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Category } from "./components";
+import { Header, Category, Cart } from "./components";
 import "./Rel.css";
 
 function Rel() {
@@ -7,6 +7,7 @@ function Rel() {
     <div id="rel">
       <Header />
       <Category />
+      <Cart />
     </div>
   );
 }
