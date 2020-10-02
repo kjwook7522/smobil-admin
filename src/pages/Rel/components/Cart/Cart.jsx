@@ -14,10 +14,10 @@ function Cart() {
       <table className="cart-table">
         <thead>
           <tr>
-            <th>품목</th>
+            <th width="15%">품목</th>
             <th>상세명</th>
-            <th>수량</th>
-            <th>관리</th>
+            <th width="15%">수량</th>
+            <th width="30%">관리</th>
           </tr>
         </thead>
         <tbody>
