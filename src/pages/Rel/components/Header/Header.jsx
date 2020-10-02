@@ -11,7 +11,7 @@ function Header() {
     <section id="header">
       <img src="/logo_wh.png" alt="logo" />
       <h1 className="name">{name} 기사님</h1>
-      <button onClick={handleSignoutClick}>로그아웃</button>
+      <button className="logout-btn" onClick={handleSignoutClick}>로그아웃</button>
     </section>
   );
 }

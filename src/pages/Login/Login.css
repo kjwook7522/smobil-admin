@@ -21,15 +21,26 @@
 }
 
 #login .login-frame button {
-  width: 300px;
+  width: 250px;
   height: 50px;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  position: relative;
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+  border-radius: 10px;
   background-color: #fff;
-  font-size: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  font-size: 14px;
   color: #333;
   cursor: pointer;
+}
+
+#login .login-frame button svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 15px;
+  /* margin: 0 20px; */
+  font-size: 30px;
 }
 
 @media (max-width: 1025px) {
