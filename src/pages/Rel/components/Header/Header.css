@@ -1,6 +1,8 @@
 #header {
   width: 100%;
+  padding: 0 10px;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -15,4 +17,10 @@
   margin: 10px 0;
   font-size: 45px;
   color: #fff;
+}
+
+@media (max-width: 769px) {
+  #header img {
+    width: 100%;
+  }
 }
