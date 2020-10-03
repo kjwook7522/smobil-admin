@@ -1,5 +1,6 @@
 #category {
   margin: 20px 0;
+  margin-bottom: calc(30vh + 20px);
 }
 
 #category .category-wrapper {
@@ -36,7 +37,7 @@
 }
 
 @media (max-width: 769px) {
-  #category .category-wrapper .item {
-    width: calc(100% - 20px);
+  #category {
+    margin-bottom: calc(40vh + 20px);
   }
 }
