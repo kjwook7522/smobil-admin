@@ -1,8 +1,29 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { TiArrowBack } from "react-icons/ti";
 import "./Part.css";
 
 function Part({ category, setCategory }) {
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    const sheetname = category;
+
+    window.gapi.client.sheets.spreadsheets.values
+      .get({
+        spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+        range: `${sheetname}!A2:C`,
+      })
+      .then(
+        response => {
+          setCategoryList(response.result.values);
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
+  }, [category]);
+
   const changeName = () => {
     switch (category) {
       case "battery":
@@ -17,6 +38,7 @@ function Part({ category, setCategory }) {
         return;
     }
   };
+
   return (
     <section id="part">
       <div className="header">
@@ -37,30 +59,16 @@ function Part({ category, setCategory }) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>배터리</td>
-            <td>테스트 베터리</td>
-            <td>25</td>
-            <td>
-              <button>담기</button>
-            </td>
-          </tr>
-          <tr>
-            <td>배터리</td>
-            <td>테스트 베터리</td>
-            <td>25</td>
-            <td>
-              <button>담기</button>
-            </td>
-          </tr>
-          <tr>
-            <td>배터리</td>
-            <td>테스트 베터리</td>
-            <td>25</td>
-            <td>
-              <button>담기</button>
-            </td>
-          </tr>
+          {categoryList.map(item => (
+            <tr key={item[0]}>
+              <td>{changeName(category)}</td>
+              <td>{item[1]}</td>
+              <td>{item[2]}</td>
+              <td>
+                <button>담기</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </section>
