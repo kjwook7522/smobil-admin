@@ -1,21 +1,21 @@
-import { PLUS_CART_COUNT, MINUS_CART_COUNT, INIT_CART } from "actions";
+import { PLUS_PART_COUNT, MINUS_PART_COUNT, INIT_PART } from "actions";
 
 const initState = [];
 
-export const myCart = (state = initState, action) => {
-  const sheetname = "driver1";
+export const partList = (state = initState, action) => {
+  const sheetname = action.part;
 
   let prodIdx;
   let prodCount;
-  let updCart;
+  let updPart;
   let value;
 
   switch (action.type) {
-    case INIT_CART:
+    case INIT_PART:
       return [...action.data];
-    case PLUS_CART_COUNT:
+    case PLUS_PART_COUNT:
       prodIdx = state.findIndex(item => item[0] === action.id);
-      prodCount = Number(state[prodIdx][3]);
+      prodCount = Number(state[prodIdx][2]);
 
       value = {
         values: [[prodCount + 1]],
@@ -25,7 +25,7 @@ export const myCart = (state = initState, action) => {
       window.gapi.client.sheets.spreadsheets.values
         .update({
           spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-          range: `${sheetname}!D${prodIdx + 2}`,
+          range: `${sheetname}!C${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
         })
@@ -39,13 +39,13 @@ export const myCart = (state = initState, action) => {
         );
 
       // local update
-      updCart = state.slice();
-      updCart[prodIdx][3] = prodCount + 1;
-      return updCart;
+      updPart = state.slice();
+      updPart[prodIdx][2] = prodCount + 1;
+      return updPart;
 
-    case MINUS_CART_COUNT:
+    case MINUS_PART_COUNT:
       prodIdx = state.findIndex(item => item[0] === action.id);
-      prodCount = Number(state[prodIdx][3]);
+      prodCount = Number(state[prodIdx][2]);
 
       value = {
         values: [[prodCount - 1]],
@@ -55,7 +55,7 @@ export const myCart = (state = initState, action) => {
       window.gapi.client.sheets.spreadsheets.values
         .update({
           spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-          range: `${sheetname}!D${prodIdx + 2}`,
+          range: `${sheetname}!C${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
         })
@@ -69,9 +69,9 @@ export const myCart = (state = initState, action) => {
         );
 
       // local update
-      updCart = state.slice();
-      updCart[prodIdx][3] = prodCount - 1;
-      return updCart;
+      updPart = state.slice();
+      updPart[prodIdx][2] = prodCount - 1;
+      return updPart;
 
     default:
       return state;

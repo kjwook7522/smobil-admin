@@ -1,28 +1,14 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { initPart, minusPart } from "actions";
 import { TiArrowBack } from "react-icons/ti";
 import "./Part.css";
 
-function Part({ category, setCategory }) {
-  const [categoryList, setCategoryList] = useState([]);
-
+function Part({ category, setCategory, initList, resetList, addCart, categoryList }) {
   useEffect(() => {
-    const sheetname = category;
-
-    window.gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-        range: `${sheetname}!A2:C`,
-      })
-      .then(
-        response => {
-          setCategoryList(response.result.values);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
-  }, [category]);
+    initList(category);
+  }, [category, initList]);
 
   const changeName = () => {
     switch (category) {
@@ -39,6 +25,11 @@ function Part({ category, setCategory }) {
     }
   };
 
+  const addProd = e => {
+    const prodId = e.target.parentElement.parentElement.id;
+    addCart(prodId, category);
+  };
+
   return (
     <section id="part">
       <div className="header">
@@ -46,6 +37,7 @@ function Part({ category, setCategory }) {
         <TiArrowBack
           onClick={() => {
             setCategory(0);
+            resetList();
           }}
         />
       </div>
@@ -60,12 +52,12 @@ function Part({ category, setCategory }) {
         </thead>
         <tbody>
           {categoryList.map(item => (
-            <tr key={item[0]}>
+            <tr key={item[0]} id={item[0]}>
               <td>{changeName(category)}</td>
               <td>{item[1]}</td>
               <td>{item[2]}</td>
               <td>
-                <button>담기</button>
+                <button onClick={addProd}>담기</button>
               </td>
             </tr>
           ))}
@@ -75,4 +67,38 @@ function Part({ category, setCategory }) {
   );
 }
 
-export default Part;
+function mapDispatchToProps(dispatch) {
+  return {
+    initList: category => {
+      const sheetname = category;
+
+      window.gapi.client.sheets.spreadsheets.values
+        .get({
+          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          range: `${sheetname}!A2:C`,
+        })
+        .then(
+          response => {
+            dispatch(initPart(response.result.values));
+          },
+          reason => {
+            console.log(reason.result.error.message);
+          }
+        );
+    },
+    resetList: () => {
+      dispatch(initPart([]));
+    },
+    addCart: (id, part) => {
+      dispatch(minusPart(id, part));
+    },
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    categoryList: state.partList,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Part);

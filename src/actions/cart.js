@@ -1,24 +1,24 @@
-export const PLUS_COUNT = "PLUS_COUNT";
-export const MINUS_COUNT = "MINUS_COUNT";
-export const INIT_LIST = "INIT_LIST";
+export const PLUS_CART_COUNT = "PLUS_CART_COUNT";
+export const MINUS_CART_COUNT = "MINUS_CART_COUNT";
+export const INIT_CART = "INIT_CART";
 
 export const plusProd = id => {
   return {
-    type: PLUS_COUNT,
+    type: PLUS_CART_COUNT,
     id,
   };
 };
 
 export const minusProd = id => {
   return {
-    type: MINUS_COUNT,
+    type: MINUS_CART_COUNT,
     id,
   };
 };
 
 export const initCart = data => {
   return {
-    type: INIT_LIST,
+    type: INIT_CART,
     data,
   };
 };
