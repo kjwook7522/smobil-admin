@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { init, minusProd, plusProd } from "actions";
+import { initCart, minusProd, plusProd } from "actions";
 import "./Cart.css";
 
 function Cart({ initList, myCart, sell, keep }) {
@@ -66,7 +66,7 @@ function mapDispatchToProps(dispatch) {
         })
         .then(
           response => {
-            dispatch(init(response.result.values));
+            dispatch(initCart(response.result.values));
           },
           reason => {
             console.log(reason.result.error.message);

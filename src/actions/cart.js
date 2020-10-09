@@ -16,7 +16,7 @@ export const minusProd = id => {
   };
 };
 
-export const init = data => {
+export const initCart = data => {
   return {
     type: INIT_LIST,
     data,
