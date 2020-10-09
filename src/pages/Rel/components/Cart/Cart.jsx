@@ -1,89 +1,23 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { init, minusProd, plusProd } from "actions";
 import "./Cart.css";
 
-function Cart() {
-  const sheetname = "driver1";
-  const [myCart, setMyCart] = useState([]);
+function Cart({ initList, myCart, sell, keep }) {
 
   useEffect(() => {
-    window.gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-        range: `${sheetname}!A2:D`,
-      })
-      .then(
-        response => {
-          setMyCart(response.result.values);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
-  }, []);
+    initList();
+  }, [initList]);
 
   const keepProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
-    const prodIdx = myCart.findIndex(item => item[0] === prodId);
-    const prodCount = Number(myCart[prodIdx][3]);
-
-    const value = {
-      values: [[prodCount + 1]],
-    };
-
-    // google sheet update
-    window.gapi.client.sheets.spreadsheets.values
-      .update({
-        spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-        range: `${sheetname}!D${prodIdx + 2}`,
-        valueInputOption: "RAW",
-        resource: value,
-      })
-      .then(
-        response => {
-          console.log(`${response.result.updatedCells} cell updated`);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
-
-    // local update
-    const updCart = myCart.slice();
-    updCart[prodIdx][3] = prodCount + 1;
-    setMyCart(updCart);
+    keep(prodId);
   };
 
   const sellProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
-    const prodIdx = myCart.findIndex(item => item[0] === prodId);
-    const prodCount = Number(myCart[prodIdx][3]);
-
-    const value = {
-      values: [[prodCount - 1]],
-    };
-
-    // google sheet update
-    window.gapi.client.sheets.spreadsheets.values
-      .update({
-        spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-        range: `${sheetname}!D${prodIdx + 2}`,
-        valueInputOption: "RAW",
-        resource: value,
-      })
-      .then(
-        response => {
-          console.log(`${response.result.updatedCells} cell updated`);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
-
-    // local update
-    const updCart = myCart.slice();
-    updCart[prodIdx][3] = prodCount - 1;
-    setMyCart(updCart);
+    sell(prodId);
   };
 
   return (
@@ -120,4 +54,38 @@ function Cart() {
   );
 }
 
-export default Cart;
+function mapDispatchToProps(dispatch) {
+  return {
+    initList: () => {
+      const sheetname = "driver1";
+
+      window.gapi.client.sheets.spreadsheets.values
+        .get({
+          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          range: `${sheetname}!A2:D`,
+        })
+        .then(
+          response => {
+            dispatch(init(response.result.values));
+          },
+          reason => {
+            console.log(reason.result.error.message);
+          }
+        );
+    },
+    keep: prodId => {
+      dispatch(plusProd(prodId));
+    },
+    sell: prodId => {
+      dispatch(minusProd(prodId));
+    },
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    myCart: state.myCart,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
