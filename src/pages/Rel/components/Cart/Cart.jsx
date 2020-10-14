@@ -1,18 +1,37 @@
 import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { initCart, minusProd, plusProd } from "actions";
+import { initCart, minusProd, deleteItem, plusPart } from "actions";
 import "./Cart.css";
 
-function Cart({ initList, myCart, sell, keep }) {
-
+function Cart({ initList, myCart, sell, keep, remove }) {
   useEffect(() => {
     initList();
   }, [initList]);
 
+  const changeName = category => {
+    switch (category) {
+      case "배터리":
+        return "battery";
+      case "오일":
+        return "oil";
+      case "필터":
+        return "filter";
+      case "와이퍼":
+        return "wiper";
+      default:
+        return;
+    }
+  };
+
   const keepProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
-    keep(prodId);
+    const prodIdx = myCart.findIndex(item => item[0] === prodId);
+    keep(prodId, changeName(myCart[prodIdx][1]));
+    if (myCart[prodIdx][3] === 0) {
+      console.log("remove")
+      // remove(prodId);
+    }
   };
 
   const sellProd = e => {
@@ -73,11 +92,15 @@ function mapDispatchToProps(dispatch) {
           }
         );
     },
-    keep: prodId => {
-      dispatch(plusProd(prodId));
+    keep: (prodId, part) => {
+      dispatch(minusProd(prodId));
+      dispatch(plusPart(prodId, part));
     },
     sell: prodId => {
       dispatch(minusProd(prodId));
+    },
+    remove: prodId => {
+      dispatch(deleteItem(prodId));
     },
   };
 }

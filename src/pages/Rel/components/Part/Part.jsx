@@ -1,11 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { initPart, minusPart } from "actions";
+import { initPart, minusPart, plusProd, addItem } from "actions";
 import { TiArrowBack } from "react-icons/ti";
 import "./Part.css";
 
-function Part({ category, setCategory, initList, resetList, addCart, categoryList }) {
+function Part({ category, setCategory, initList, resetList, addCart, newItem, categoryList, cartList }) {
   useEffect(() => {
     initList(category);
   }, [category, initList]);
@@ -27,7 +27,17 @@ function Part({ category, setCategory, initList, resetList, addCart, categoryLis
 
   const addProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
-    addCart(prodId, category);
+    const prodIdx = categoryList.findIndex(item => item[0] === prodId);
+
+    if (!cartList.find(item => item[0] === prodId)) {
+      newItem(prodId, changeName(), categoryList[prodIdx][1]);
+    } else {
+      if (categoryList[prodIdx][2] === 0) {
+        alert("현재 재고가 없습니다.");
+        return;
+      }
+      addCart(prodId, category);
+    }
   };
 
   return (
@@ -91,6 +101,10 @@ function mapDispatchToProps(dispatch) {
     },
     addCart: (id, part) => {
       dispatch(minusPart(id, part));
+      dispatch(plusProd(id));
+    },
+    newItem: (id, kind, name) => {
+      dispatch(addItem(id, kind, name));
     },
   };
 }
@@ -98,6 +112,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     categoryList: state.partList,
+    cartList: state.myCart,
   };
 }
 

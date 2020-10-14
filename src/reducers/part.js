@@ -14,6 +14,9 @@ export const partList = (state = initState, action) => {
     case INIT_PART:
       return [...action.data];
     case PLUS_PART_COUNT:
+      if (!state.length) {
+        return state;
+      }
       prodIdx = state.findIndex(item => item[0] === action.id);
       prodCount = Number(state[prodIdx][2]);
 
@@ -44,6 +47,9 @@ export const partList = (state = initState, action) => {
       return updPart;
 
     case MINUS_PART_COUNT:
+      if (!state.length) {
+        return state;
+      }
       prodIdx = state.findIndex(item => item[0] === action.id);
       prodCount = Number(state[prodIdx][2]);
 
