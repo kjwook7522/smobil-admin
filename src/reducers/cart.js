@@ -99,7 +99,7 @@ export const myCart = (state = initState, action) => {
 
       // local update
       updCart = state.slice();
-      updCart.push([Number(action.id), action.kind, action.name, 0]);
+      updCart.push([action.id, action.kind, action.name, 0]);
       return updCart;
 
     case DELETE_CART_ITEM:

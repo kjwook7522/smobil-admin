@@ -9,26 +9,27 @@ function Cart({ initList, myCart, sell, keep, remove }) {
     initList();
   }, [initList]);
 
-  const changeName = category => {
-    switch (category) {
-      case "배터리":
-        return "battery";
-      case "오일":
-        return "oil";
-      case "필터":
-        return "filter";
-      case "와이퍼":
-        return "wiper";
-      default:
-        return;
-    }
-  };
+  // const changeName = category => {
+  //   switch (category) {
+  //     case "배터리":
+  //       return "battery";
+  //     case "오일":
+  //       return "oil";
+  //     case "필터":
+  //       return "filter";
+  //     case "와이퍼":
+  //       return "wiper";
+  //     default:
+  //       return;
+  //   }
+  // };
 
   const keepProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = myCart.findIndex(item => item[0] === prodId);
-    keep(prodId, changeName(myCart[prodIdx][1]));
-    if (myCart[prodIdx][3] === 0) {
+    keep(prodId);
+    console.log(myCart[prodIdx]);
+    if (Number(myCart[prodIdx][3]) === 0) {
       console.log("remove")
       // remove(prodId);
     }
@@ -92,9 +93,9 @@ function mapDispatchToProps(dispatch) {
           }
         );
     },
-    keep: (prodId, part) => {
+    keep: prodId => {
       dispatch(minusProd(prodId));
-      dispatch(plusPart(prodId, part));
+      dispatch(plusPart(prodId));
     },
     sell: prodId => {
       dispatch(minusProd(prodId));

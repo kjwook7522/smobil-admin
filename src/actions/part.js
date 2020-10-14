@@ -2,18 +2,16 @@ export const PLUS_PART_COUNT = "PLUS_PART_COUNT";
 export const MINUS_PART_COUNT = "MINUS_PART_COUNT";
 export const INIT_PART = "INIT_PART";
 
-export const plusPart = (id, part) => {
+export const plusPart = id => {
   return {
     type: PLUS_PART_COUNT,
-    part,
     id,
   };
 };
 
-export const minusPart = (id, part) => {
+export const minusPart = id => {
   return {
     type: MINUS_PART_COUNT,
-    part,
     id,
   };
 };

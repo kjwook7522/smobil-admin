@@ -3,7 +3,7 @@ import { PLUS_PART_COUNT, MINUS_PART_COUNT, INIT_PART } from "actions";
 const initState = [];
 
 export const partList = (state = initState, action) => {
-  const sheetname = action.part;
+  const sheetname = "storage"
 
   let prodIdx;
   let prodCount;
@@ -18,7 +18,7 @@ export const partList = (state = initState, action) => {
         return state;
       }
       prodIdx = state.findIndex(item => item[0] === action.id);
-      prodCount = Number(state[prodIdx][2]);
+      prodCount = Number(state[prodIdx][3]);
 
       value = {
         values: [[prodCount + 1]],
@@ -28,7 +28,7 @@ export const partList = (state = initState, action) => {
       window.gapi.client.sheets.spreadsheets.values
         .update({
           spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-          range: `${sheetname}!C${prodIdx + 2}`,
+          range: `${sheetname}!D${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
         })
@@ -43,7 +43,7 @@ export const partList = (state = initState, action) => {
 
       // local update
       updPart = state.slice();
-      updPart[prodIdx][2] = prodCount + 1;
+      updPart[prodIdx][3] = prodCount + 1;
       return updPart;
 
     case MINUS_PART_COUNT:
@@ -51,7 +51,7 @@ export const partList = (state = initState, action) => {
         return state;
       }
       prodIdx = state.findIndex(item => item[0] === action.id);
-      prodCount = Number(state[prodIdx][2]);
+      prodCount = Number(state[prodIdx][3]);
 
       value = {
         values: [[prodCount - 1]],
@@ -61,7 +61,7 @@ export const partList = (state = initState, action) => {
       window.gapi.client.sheets.spreadsheets.values
         .update({
           spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-          range: `${sheetname}!C${prodIdx + 2}`,
+          range: `${sheetname}!D${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
         })
@@ -76,7 +76,7 @@ export const partList = (state = initState, action) => {
 
       // local update
       updPart = state.slice();
-      updPart[prodIdx][2] = prodCount - 1;
+      updPart[prodIdx][3] = prodCount - 1;
       return updPart;
 
     default:
