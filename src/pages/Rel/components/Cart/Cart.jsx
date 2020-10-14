@@ -28,10 +28,8 @@ function Cart({ initList, myCart, sell, keep, remove }) {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = myCart.findIndex(item => item[0] === prodId);
     keep(prodId);
-    console.log(myCart[prodIdx]);
     if (Number(myCart[prodIdx][3]) === 0) {
-      console.log("remove")
-      // remove(prodId);
+      remove(prodId);
     }
   };
 

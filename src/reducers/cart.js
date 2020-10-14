@@ -103,19 +103,38 @@ export const myCart = (state = initState, action) => {
       return updCart;
 
     case DELETE_CART_ITEM:
-      window.gapi.client.sheets.spreadsheets.values.clear({
-        spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-        range: `${sheetname}!A8`,
-      })
-      .then(
-        response => {
-          console.log(response);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      )
-      return state;
+      prodIdx = state.findIndex(item => item[0] === action.id);
+      value = {
+        requests: [
+          {
+            deleteDimension: {
+              range: {
+                sheetId: 0,
+                dimension: "ROWS",
+                startIndex: prodIdx + 1,
+                endIndex: prodIdx + 2,
+              },
+            },
+          },
+        ],
+      };
+      window.gapi.client.sheets.spreadsheets
+        .batchUpdate({
+          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          resource: value,
+        })
+        .then(
+          response => {
+            console.log("1 row removed");
+          },
+          reason => {
+            console.log(reason.result.error.message);
+          }
+        );
+
+      updCart = state.slice();
+      updCart.splice(prodIdx, 1);
+      return updCart;
 
     default:
       return state;
