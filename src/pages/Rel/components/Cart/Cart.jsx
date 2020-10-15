@@ -9,27 +9,12 @@ function Cart({ initList, myCart, sell, keep, remove }) {
     initList();
   }, [initList]);
 
-  // const changeName = category => {
-  //   switch (category) {
-  //     case "배터리":
-  //       return "battery";
-  //     case "오일":
-  //       return "oil";
-  //     case "필터":
-  //       return "filter";
-  //     case "와이퍼":
-  //       return "wiper";
-  //     default:
-  //       return;
-  //   }
-  // };
-
   const keepProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = myCart.findIndex(item => item[0] === prodId);
     keep(prodId);
     if (Number(myCart[prodIdx][3]) === 0) {
-      remove(prodId);
+      // remove(prodId);
     }
   };
 
@@ -51,7 +36,7 @@ function Cart({ initList, myCart, sell, keep, remove }) {
           </tr>
         </thead>
         <tbody>
-          {myCart.map(item => (
+          {myCart.map(item => Number(item[3]) ? (
             <tr key={item[0]} id={item[0]}>
               <td className="type">{item[1]}</td>
               <td className="name">{item[2]}</td>
@@ -65,7 +50,7 @@ function Cart({ initList, myCart, sell, keep, remove }) {
                 </button>
               </td>
             </tr>
-          ))}
+          ) : null)}
         </tbody>
       </table>
     </section>

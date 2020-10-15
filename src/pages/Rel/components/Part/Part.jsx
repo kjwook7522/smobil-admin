@@ -20,28 +20,13 @@ function Part({ category, setCategory, addCart, newItem, categoryList, cartList 
     }
   };
 
-  // const chgNmToE = category => {
-  //   switch (category) {
-  //     case "배터리":
-  //       return "battery";
-  //     case "오일":
-  //       return "oil";
-  //     case "필터":
-  //       return "filter";
-  //     case "와이퍼":
-  //       return "wiper";
-  //     default:
-  //       return;
-  //   }
-  // };
-
   const addProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = categoryList.findIndex(item => item[0] === prodId);
 
-    if (!cartList.find(item => item[0] === prodId)) {
-      newItem(prodId, chgNmToK(category), categoryList[prodIdx][2]);
-    }
+    // if (!cartList.find(item => item[0] === prodId)) {
+    //   newItem(prodId, chgNmToK(category), categoryList[prodIdx][2]);
+    // }
     if (Number(categoryList[prodIdx][3]) === 0) {
       alert("현재 재고가 없습니다.");
       return;
