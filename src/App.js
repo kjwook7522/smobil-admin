@@ -43,6 +43,21 @@ function App() {
         });
     };
 
+    //******* prevent double tab zoom *******//
+    var lastTouchEnd = 0;
+    document.documentElement.addEventListener(
+      "touchend",
+      function (e) {
+        var now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+          e.preventDefault();
+        }
+        lastTouchEnd = now;
+      },
+      false
+    );
+    //****************************************//
+
     handleClientLoad();
   }, []);
 
