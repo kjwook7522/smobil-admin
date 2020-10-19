@@ -21,6 +21,7 @@ function App() {
     const updateSigninStatus = isSignedIn => {
       if (isSignedIn) {
         setLogined(true);
+        saveMyInfo();
       } else {
         setLogined(false);
       }
@@ -41,6 +42,16 @@ function App() {
           // Handle the initial sign-in state.
           updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
         });
+    };
+
+    const saveMyInfo = () => {
+      const fullname = window.gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName();
+      const userId = window.gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getId();
+      const email = window.gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail();
+      localStorage.setItem("fullname", fullname);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("email", email);
+      alert("google unique id는 " + userId + "입니다.");
     };
 
     //******* prevent double tab zoom *******//

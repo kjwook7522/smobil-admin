@@ -4,7 +4,8 @@ import { DELETE_CART_ITEM } from "../actions/cart";
 const initState = [];
 
 export const myCart = (state = initState, action) => {
-  const sheetname = "driver1";
+  // const sheetname = "driver1";
+  const sheetname = localStorage.getItem("userId");
 
   let prodIdx;
   let prodCount;
