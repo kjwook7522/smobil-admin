@@ -20,8 +20,8 @@ function App() {
 
     const updateSigninStatus = isSignedIn => {
       if (isSignedIn) {
-        setLogined(true);
         saveMyInfo();
+        setLogined(true);
       } else {
         setLogined(false);
       }
