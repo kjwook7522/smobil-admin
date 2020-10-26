@@ -11,10 +11,18 @@ function Part({ category, setCategory, addCart, newItem, categoryList, cartList 
         return "배터리";
       case "oil":
         return "오일";
-      case "filter":
-        return "필터";
+      case "oil-filter":
+        return "오일필터";
+      case "air-filter":
+        return "에어필터";
       case "wiper":
         return "와이퍼";
+      case "washer":
+        return "워셔액";
+      case "pad":
+        return "패드";
+      case "etc":
+        return "기타";
       default:
         return;
     }
