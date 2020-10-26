@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Loading } from "common";
-import { Login, Rel } from "pages";
+import { Login, Rel, Admin } from "pages";
 import "./App.css";
 
 function App() {
@@ -75,7 +75,10 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Switch>{loading ? <Loading /> : logined ? <Route exact path="/" component={Rel} /> : <Route exact path="/" component={Login} />}</Switch>
+        <Switch>
+          {loading ? <Loading /> : logined ? <Route exact path="/" component={Rel} /> : <Route exact path="/" component={Login} />}
+          {loading ? <Loading /> : logined ? <Route path="/admin" component={Admin} /> : <Route exact path="/admin" component={Login} />}
+        </Switch>
       </Router>
     </div>
   );
