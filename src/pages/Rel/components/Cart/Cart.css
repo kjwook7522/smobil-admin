@@ -8,6 +8,10 @@
   -ms-overflow-style: none;
 }
 
+#cart::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 600px) {
   #cart {
     width: 100%;
