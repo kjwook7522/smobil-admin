@@ -51,7 +51,6 @@ function App() {
       localStorage.setItem("fullname", fullname);
       localStorage.setItem("userId", userId);
       localStorage.setItem("email", email);
-      alert("google unique id는 " + userId + "입니다.");
     };
 
     //******* prevent double tab zoom *******//
