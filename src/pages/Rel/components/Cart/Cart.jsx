@@ -36,21 +36,23 @@ function Cart({ initList, myCart, sell, keep, remove }) {
           </tr>
         </thead>
         <tbody>
-          {myCart.map(item => Number(item[3]) ? (
-            <tr key={item[0]} id={item[0]}>
-              <td className="type">{item[1]}</td>
-              <td className="name">{item[2]}</td>
-              <td className="counts">{item[3]}</td>
-              <td className="btn">
-                <button className="keep-btn" onClick={keepProd}>
-                  재고
-                </button>
-                <button className="sell-btn" onClick={sellProd}>
-                  판매
-                </button>
-              </td>
-            </tr>
-          ) : null)}
+          {myCart.map(item =>
+            Number(item[3]) ? (
+              <tr key={item[0]} id={item[0]}>
+                <td className="type">{item[1]}</td>
+                <td className="name">{item[2]}</td>
+                <td className="counts">{item[3]}</td>
+                <td className="btn">
+                  <button className="keep-btn" onClick={keepProd}>
+                    재고
+                  </button>
+                  <button className="sell-btn" onClick={sellProd}>
+                    판매
+                  </button>
+                </td>
+              </tr>
+            ) : null
+          )}
         </tbody>
       </table>
     </section>

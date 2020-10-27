@@ -1,11 +1,12 @@
 #cart {
   width: 600px;
-  height: 30vh;
-  margin: 10px 0;
+  /* height: 30vh; */
+  max-height: 30vh;
   position: fixed;
   bottom: 0px;
   border-radius: 10px;
   overflow: scroll;
+  -ms-overflow-style: none;
 }
 
 @media (max-width: 600px) {
