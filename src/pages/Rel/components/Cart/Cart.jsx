@@ -29,23 +29,26 @@ function Cart({ initList, myCart, sell, keep, remove }) {
       <table className="cart-table">
         <thead>
           <tr>
+            <th width="15%">재고</th>
             <th width="15%">품목</th>
             <th>상세명</th>
             <th width="15%">수량</th>
-            <th width="30%">관리</th>
+            <th width="15%">판매</th>
           </tr>
         </thead>
         <tbody>
           {myCart.map(item =>
             Number(item[3]) ? (
               <tr key={item[0]} id={item[0]}>
-                <td className="type">{item[1]}</td>
-                <td className="name">{item[2]}</td>
-                <td className="counts">{item[3]}</td>
                 <td className="btn">
                   <button className="keep-btn" onClick={keepProd}>
                     재고
                   </button>
+                </td>
+                <td className="type">{item[1]}</td>
+                <td className="name">{item[2]}</td>
+                <td className="counts">{item[3]}</td>
+                <td className="btn">
                   <button className="sell-btn" onClick={sellProd}>
                     판매
                   </button>
