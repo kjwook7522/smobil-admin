@@ -1,13 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Loading } from "common";
 import { Login, Stock, Admin } from "pages";
+import { setLogin, setLoading } from "actions";
 import "./App.css";
 
-function App() {
-  const [logined, setLogined] = useState(false);
-  const [loading, setLoading] = useState(true);
+function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
 
   useEffect(() => {
     const CLIENT_ID = "542989334376-gjqs6grpj2o23t91n1ttht0gtu10mk3g.apps.googleusercontent.com";
@@ -21,9 +21,9 @@ function App() {
     const updateSigninStatus = isSignedIn => {
       if (isSignedIn) {
         saveMyInfo();
-        setLogined(true);
+        dispatchLogin(true);
       } else {
-        setLogined(false);
+        dispatchLogin(false);
       }
     };
 
@@ -36,7 +36,7 @@ function App() {
           scope: SCOPES,
         })
         .then(() => {
-          setLoading(false);
+          dispatchLoading(false);
           window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
           // Handle the initial sign-in state.
@@ -69,18 +69,36 @@ function App() {
     //****************************************//
 
     handleClientLoad();
-  }, []);
+  }, [dispatchLoading, dispatchLogin]);
 
   return (
     <div className="App">
       <Router>
         <Switch>
-          {loading ? <Loading /> : logined ? <Route exact path="/" component={Stock} /> : <Route exact path="/" component={Login} />}
-          {loading ? <Loading /> : logined ? <Route path="/admin" component={Admin} /> : <Route exact path="/admin" component={Login} />}
+          {isLoading ? <Loading /> : isLogined ? <Route exact path="/" component={Stock} /> : <Route exact path="/" component={Login} />}
+          {isLoading ? <Loading /> : isLogined ? <Route path="/admin" component={Admin} /> : <Route exact path="/admin" component={Login} />}
         </Switch>
       </Router>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    isLogined: state.login,
+    isLoading: state.loading,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatchLogin: set => {
+      dispatch(setLogin(set));
+    },
+    dispatchLoading: set => {
+      dispatch(setLoading(set));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
