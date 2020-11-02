@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { initPart } from "actions";
 import { Header, Category, Cart, Part } from "./components";
-import "./Rel.css";
+import "./Stock.css";
 
-function Rel({ initList }) {
+function Stock({ initList }) {
   const [category, setCategory] = useState("");
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function Rel({ initList }) {
   }, [initList]);
 
   return (
-    <div id="rel">
+    <div id="stock">
       {category ? <></> : <Header />}
       {category ? <Part category={category} setCategory={setCategory} /> : <Category setCategory={setCategory} />}
       <Cart />
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Rel);
+export default connect(null, mapDispatchToProps)(Stock);
