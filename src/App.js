@@ -3,12 +3,11 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Loading } from "common";
-import { Login, Stock, Admin } from "pages";
+import { Login, Stock, Admin, GoogleId } from "pages";
 import { setLogin, setLoading } from "actions";
 import "./App.css";
 
 function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
-
   useEffect(() => {
     const CLIENT_ID = "542989334376-gjqs6grpj2o23t91n1ttht0gtu10mk3g.apps.googleusercontent.com";
     const API_KEY = "AIzaSyALB0KHFqZ_Be9WJKf_eIa0Nb3GHjr_LxM";
@@ -21,7 +20,9 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
     const updateSigninStatus = isSignedIn => {
       if (isSignedIn) {
         saveMyInfo();
+        dispatchLoading(true);
         dispatchLogin(true);
+        checkDeliver();
       } else {
         dispatchLogin(false);
       }
@@ -53,6 +54,32 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
       localStorage.setItem("email", email);
     };
 
+    const checkDeliver = () => {
+      const sheetname = "drivers";
+      const driverId = localStorage.getItem("userId");
+      let driverList = [];
+
+      window.gapi.client.sheets.spreadsheets.values
+        .get({
+          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          range: `${sheetname}!A2:C`,
+        })
+        .then(
+          response => {
+            driverList = response.result.values;
+            if (driverList.find(row => row[0] === driverId)) {
+              dispatchLoading(false);
+            } else {
+              window.gapi.auth2.getAuthInstance().signOut();
+              window.location.pathname = "googleid";
+            }
+          },
+          reason => {
+            console.log(reason.result.error.message);
+          }
+        );
+    };
+
     //******* prevent double tab zoom *******//
     var lastTouchEnd = 0;
     document.documentElement.addEventListener(
@@ -75,8 +102,9 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
     <div className="App">
       <Router>
         <Switch>
-          {isLoading ? <Loading /> : isLogined ? <Route exact path="/" component={Stock} /> : <Route exact path="/" component={Login} />}
-          {isLoading ? <Loading /> : isLogined ? <Route path="/admin" component={Admin} /> : <Route exact path="/admin" component={Login} />}
+          {isLoading ? <Route exact path="/" component={Loading} /> : isLogined ? <Route exact path="/" component={Stock} /> : <Route exact path="/" component={Login} />}
+          {isLoading ? <Route exact path="/" component={Loading} /> : isLogined ? <Route path="/admin" component={Admin} /> : <Route exact path="/admin" component={Login} />}
+          <Route path="/googleid" component={GoogleId} />
         </Switch>
       </Router>
     </div>
