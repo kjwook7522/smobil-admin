@@ -8,11 +8,6 @@ function Header() {
     window.gapi.auth2.getAuthInstance().signOut();
   };
 
-  const checkGoogleId = () => {
-    const userId = localStorage.getItem("userId");
-    alert("google unique id는 " + userId + "입니다.");
-  };
-
   return (
     <section id="header">
       <img src="/logo_wh.png" alt="logo" />
@@ -24,9 +19,6 @@ function Header() {
         <Link to="/admin">
           <button className="header-btn">관리자 전환</button>
         </Link>
-        <button className="header-btn" onClick={checkGoogleId}>
-          구글 고유번호 확인
-        </button>
       </div>
     </section>
   );
