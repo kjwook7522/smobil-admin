@@ -1,0 +1,70 @@
+#cart {
+  width: 600px;
+  max-height: 30vh;
+  position: fixed;
+  bottom: 0px;
+  border-radius: 10px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+}
+
+#cart::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  #cart {
+    width: 100%;
+  }
+}
+
+#cart h1 {
+  padding: 10px 0;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  background-color: #152b5e;
+  color: #fff;
+}
+
+#cart .cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0 0 10px 10px;
+  background-color: #fff;
+}
+
+#cart .cart-table thead {
+  background-color: #ccc;
+}
+
+#cart .cart-table thead th {
+  padding: 5px 0;
+}
+
+#cart .cart-table tbody td {
+  padding: 5px 0;
+  text-align: center;
+}
+
+#cart .cart-table tbody button {
+  margin: 0 3px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#cart .cart-table tbody .keep-btn {
+  background-color: #3d27b9;
+}
+
+#cart .cart-table tbody .sell-btn {
+  background-color: #c93838;
+}
+
+@media (max-width: 769px) {
+  #cart {
+    max-height: 40vh;
+  }
+}
