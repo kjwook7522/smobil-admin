@@ -64,3 +64,9 @@
   cursor: pointer;
   background-color: #17a01e;
 }
+
+@media (max-width: 769px) {
+  #part .part-table {
+    margin-bottom: calc(40vh + 20px);
+  }
+}
