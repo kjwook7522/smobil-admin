@@ -63,15 +63,14 @@ function Cart({ initList, myCart, sell, keep, remove }) {
 }
 
 function mapDispatchToProps(dispatch) {
+  const driverId = localStorage.getItem("userId");
+
   return {
     initList: () => {
-      // const sheetname = "driver1";
-      const sheetname = localStorage.getItem("userId");
-
       window.gapi.client.sheets.spreadsheets.values
         .get({
           spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
-          range: `${sheetname}!A2:D`,
+          range: `${driverId}!A2:D`,
         })
         .then(
           response => {
@@ -83,11 +82,11 @@ function mapDispatchToProps(dispatch) {
         );
     },
     keep: prodId => {
-      dispatch(minusProd(prodId));
+      dispatch(minusProd(prodId, driverId));
       dispatch(plusPart(prodId));
     },
     sell: prodId => {
-      dispatch(minusProd(prodId));
+      dispatch(minusProd(prodId, driverId));
     },
     remove: prodId => {
       dispatch(deleteItem(prodId));

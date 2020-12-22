@@ -83,10 +83,12 @@ function Part({ category, setCategory, addCart, newItem, categoryList, cartList 
 }
 
 function mapDispatchToProps(dispatch) {
+  const driverId = localStorage.getItem("userId");
+
   return {
     addCart: id => {
       dispatch(minusPart(id));
-      dispatch(plusProd(id));
+      dispatch(plusProd(id, driverId));
     },
     newItem: (id, kind, name) => {
       dispatch(addItem(id, kind, name));

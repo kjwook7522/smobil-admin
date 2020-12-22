@@ -5,7 +5,7 @@ const initState = [];
 
 export const myCart = (state = initState, action) => {
   // const sheetname = "driver1";
-  const sheetname = localStorage.getItem("userId");
+  const sheetname = action.driverId;
 
   let prodIdx;
   let prodCount;

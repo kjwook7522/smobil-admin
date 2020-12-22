@@ -4,17 +4,19 @@ export const ADD_CART_ITEM = "ADD_CART_ITEM";
 export const DELETE_CART_ITEM = "DELETE_CART_ITEM";
 export const INIT_CART = "INIT_CART";
 
-export const plusProd = id => {
+export const plusProd = (id, driverId) => {
   return {
     type: PLUS_CART_COUNT,
     id,
+    driverId,
   };
 };
 
-export const minusProd = id => {
+export const minusProd = (id, driverId) => {
   return {
     type: MINUS_CART_COUNT,
     id,
+    driverId,
   };
 };
 
