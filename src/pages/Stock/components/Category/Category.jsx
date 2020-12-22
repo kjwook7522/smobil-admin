@@ -1,7 +1,7 @@
 import React from "react";
 import { FaBatteryHalf } from "react-icons/fa";
 import { RiOilLine } from "react-icons/ri";
-import { BiTachometer, BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiTachometer, BiDotsHorizontalRounded, BiWater } from "react-icons/bi";
 import { IoIosWater } from "react-icons/io";
 import { FiWind } from "react-icons/fi";
 import { MdLocalCarWash } from "react-icons/md";
@@ -42,6 +42,10 @@ function Category({ setCategory }) {
         <div className="item" id="pad" onClick={changeCategory}>
           <CgKeyboard />
           <p>패드</p>
+        </div>
+        <div className="item" id="aircon" onClick={changeCategory}>
+          <BiWater />
+          <p>에어컨필터</p>
         </div>
         <div className="item" id="etc" onClick={changeCategory}>
           <BiDotsHorizontalRounded />

@@ -21,6 +21,8 @@ function Part({ category, setCategory, addCart, newItem, categoryList, cartList 
         return "워셔액";
       case "pad":
         return "패드";
+      case "aircon":
+        return "에어컨필터";
       case "etc":
         return "기타";
       default:
