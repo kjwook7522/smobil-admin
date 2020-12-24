@@ -17,9 +17,9 @@ function AdminUser({ replace }) {
     <section id="admin">
       {category.menu && <AdminMenu replace={replace} setCategory={setCategory} />}
       {category.drivers && <Drivers setCategory={setCategory} />}
-      {category.storage && <Storage />}
-      {category.new && <New />}
-      {category.manage && <Manage />}
+      {category.storage && <Storage setCategory={setCategory} />}
+      {category.new && <New setCategory={setCategory} />}
+      {category.manage && <Manage setCategory={setCategory} />}
     </section>
   );
 }
