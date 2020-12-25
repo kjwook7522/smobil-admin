@@ -1,18 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
-import { spreadsheetId } from 'common';
+import { spreadsheetId, categoryStruct } from 'common';
 import './Storage.css';
 
 function Storage({ setCategory }) {
-  const categoryStruct = {
-    drivers: false,
-    storage: false,
-    new: false,
-    manage: false,
-    menu: true,
-  };
-
   const [storageList, setStorageList] = useState([]);
   const [inputs, setInputs] = useState({});
 
@@ -27,7 +19,7 @@ function Storage({ setCategory }) {
   };
 
   const applySheet = e => {
-    const sheetname = "storage";
+    const sheetname = 'storage';
     const prodId = e.currentTarget.parentElement.parentElement.id;
     const prodIdx = storageList.findIndex(item => item[0] === prodId);
     const prodCount = inputs[prodId];
@@ -46,11 +38,11 @@ function Storage({ setCategory }) {
       .then(
         response => {
           console.log(`${response.result.updatedCells} cell updated`);
-          alert("적용되었습니다.");
+          alert('적용되었습니다.');
         },
         reason => {
           console.log(reason.result.error.message);
-          alert("적용이 실패하였습니다.");
+          alert('적용이 실패하였습니다.');
         }
       );
   };
@@ -87,7 +79,7 @@ function Storage({ setCategory }) {
         <h1>창고 재고 확인</h1>
         <TiArrowBack
           onClick={() => {
-            setCategory(categoryStruct);
+            setCategory({ ...categoryStruct, menu: true });
           }}
         />
       </div>

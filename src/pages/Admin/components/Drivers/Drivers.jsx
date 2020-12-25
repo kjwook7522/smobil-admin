@@ -1,21 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
-import { spreadsheetId } from 'common';
+import { spreadsheetId, categoryStruct } from 'common';
 import './Drivers.css';
 
 function Drivers({ setCategory }) {
   const [driverInfos, setDriverInfos] = useState([]);
   const [driverCart, setDriverCart] = useState({});
   const [storage, setStorage] = useState([]);
-
-  const categoryStruct = {
-    drivers: false,
-    storage: false,
-    new: false,
-    manage: false,
-    menu: true,
-  };
 
   const getDrivers = () => {
     const sheetname = 'drivers';
@@ -164,7 +156,7 @@ function Drivers({ setCategory }) {
         <h1>기사별 재고확인</h1>
         <TiArrowBack
           onClick={() => {
-            setCategory(categoryStruct);
+            setCategory({ ...categoryStruct, menu: true });
           }}
         />
       </div>

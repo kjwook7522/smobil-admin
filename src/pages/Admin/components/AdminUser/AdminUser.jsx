@@ -1,17 +1,11 @@
-import React from "react";
-import { useState } from "react";
-import { AdminMenu, Drivers, Storage, New, Manage } from "../../components";
-import "./AdminUser.css";
+import React from 'react';
+import { useState } from 'react';
+import { AdminMenu, Drivers, Storage, New, Manage } from '../../components';
+import { categoryStruct } from 'common';
+import './AdminUser.css';
 
 function AdminUser({ replace }) {
-  const categoryStruct = {
-    drivers: false,
-    storage: false,
-    new: false,
-    manage: false,
-    menu: true,
-  }
-  const [category, setCategory] = useState(categoryStruct);
+  const [category, setCategory] = useState({ ...categoryStruct, menu: true });
 
   return (
     <section id="admin">

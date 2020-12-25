@@ -1,18 +1,11 @@
 import React from "react";
 import { FaTruckMoving, FaBoxOpen, FaPlusSquare, FaUserCog } from "react-icons/fa";
+import { categoryStruct } from "common";
 import "./AdminMenu.css";
 
 function AdminMenu({ replace, setCategory }) {
   const goMain = () => {
     replace("/");
-  };
-
-  const categoryStruct = {
-    drivers: false,
-    storage: false,
-    new: false,
-    manage: false,
-    menu: false,
   };
 
   const selectCategory = e => {

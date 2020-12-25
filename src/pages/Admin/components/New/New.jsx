@@ -2,18 +2,10 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
 import { FaSpinner } from 'react-icons/fa';
-import { spreadsheetId } from 'common';
+import { spreadsheetId, categoryStruct } from 'common';
 import './New.css';
 
 function New({ setCategory }) {
-  const categoryStruct = {
-    drivers: false,
-    storage: false,
-    new: false,
-    manage: false,
-    menu: true,
-  };
-
   const initInput = {
     prodid: '',
     category: '배터리',
@@ -125,7 +117,7 @@ function New({ setCategory }) {
         <h1>신규 제품 입고</h1>
         <TiArrowBack
           onClick={() => {
-            setCategory(categoryStruct);
+            setCategory({ ...categoryStruct, menu: true });
           }}
         />
       </div>
