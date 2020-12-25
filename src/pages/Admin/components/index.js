@@ -4,4 +4,5 @@ export { default as AdminMenu } from "./AdminMenu/AdminMenu";
 export { default as Drivers } from "./Drivers/Drivers";
 export { default as Storage } from "./Storage/Storage";
 export { default as New } from "./New/New";
-export { default as Manage } from "./Manage/Manage"
+export { default as Manage } from "./Manage/Manage";
+export { default as SalesLog } from "./SalesLog/SalesLog";
