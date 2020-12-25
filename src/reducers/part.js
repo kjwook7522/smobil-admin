@@ -1,3 +1,4 @@
+import { spreadsheetId } from "common";
 import { PLUS_PART_COUNT, MINUS_PART_COUNT, INIT_PART } from "actions";
 
 const initState = [];
@@ -27,7 +28,7 @@ export const partList = (state = initState, action) => {
       // google sheet update
       window.gapi.client.sheets.spreadsheets.values
         .update({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${sheetname}!D${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
@@ -60,7 +61,7 @@ export const partList = (state = initState, action) => {
       // google sheet update
       window.gapi.client.sheets.spreadsheets.values
         .update({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${sheetname}!D${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,

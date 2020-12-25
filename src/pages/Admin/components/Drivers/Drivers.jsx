@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
+import { spreadsheetId } from 'common';
 import './Drivers.css';
 
 function Drivers({ setCategory }) {
@@ -22,7 +23,7 @@ function Drivers({ setCategory }) {
     const promiseDriver = new Promise((resolve, reject) => {
       window.gapi.client.sheets.spreadsheets.values
         .get({
-          spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+          spreadsheetId,
           range: `${sheetname}!A2:C`,
         })
         .then(
@@ -47,7 +48,7 @@ function Drivers({ setCategory }) {
 
       window.gapi.client.sheets.spreadsheets.values
         .get({
-          spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+          spreadsheetId,
           range: `${sheetname}!A2:D`,
         })
         .then(
@@ -67,7 +68,7 @@ function Drivers({ setCategory }) {
 
     window.gapi.client.sheets.spreadsheets.values
       .get({
-        spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+        spreadsheetId,
         range: `${sheetname}!A2:D`,
       })
       .then(
@@ -83,7 +84,7 @@ function Drivers({ setCategory }) {
   const updateGoogleSheet = (sheetname, prodIdx, value) => {
     window.gapi.client.sheets.spreadsheets.values
       .update({
-        spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+        spreadsheetId,
         range: `${sheetname}!D${prodIdx + 2}`,
         valueInputOption: 'RAW',
         resource: value,
@@ -123,7 +124,6 @@ function Drivers({ setCategory }) {
 
     let tempStorage = [...storage];
     tempStorage[prodIdx][3] = parseInt(tempStorage[prodIdx][3]) + 1;
-    console.log("storage", tempStorage[prodIdx][3]);
     setStorage(tempStorage);
 
     updateGoogleSheet(sheetname, prodIdx, value);

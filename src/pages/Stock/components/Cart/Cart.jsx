@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { initCart, minusProd, deleteItem, plusPart } from "actions";
+import { spreadsheetId } from "common";
 import "./Cart.css";
 
 function Cart({ initList, myCart, sell, keep, remove }) {
@@ -69,7 +70,7 @@ function mapDispatchToProps(dispatch) {
     initList: () => {
       window.gapi.client.sheets.spreadsheets.values
         .get({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${driverId}!A2:D`,
         })
         .then(

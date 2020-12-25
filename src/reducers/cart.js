@@ -1,3 +1,4 @@
+import { spreadsheetId } from "common";
 import { PLUS_CART_COUNT, MINUS_CART_COUNT, ADD_CART_ITEM, INIT_CART } from "actions";
 import { DELETE_CART_ITEM } from "../actions/cart";
 
@@ -26,7 +27,7 @@ export const myCart = (state = initState, action) => {
       // google sheet update
       window.gapi.client.sheets.spreadsheets.values
         .update({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${sheetname}!D${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
@@ -56,7 +57,7 @@ export const myCart = (state = initState, action) => {
       // google sheet update
       window.gapi.client.sheets.spreadsheets.values
         .update({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${sheetname}!D${prodIdx + 2}`,
           valueInputOption: "RAW",
           resource: value,
@@ -83,7 +84,7 @@ export const myCart = (state = initState, action) => {
       // google sheet update
       window.gapi.client.sheets.spreadsheets.values
         .append({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           valueInputOption: "RAW",
           insertDataOption: "INSERT_ROWS",
           range: `${sheetname}!A1`,
@@ -121,7 +122,7 @@ export const myCart = (state = initState, action) => {
       };
       window.gapi.client.sheets.spreadsheets
         .batchUpdate({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           resource: value,
         })
         .then(

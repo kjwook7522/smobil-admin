@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
 import { FaSpinner } from 'react-icons/fa';
+import { spreadsheetId } from 'common';
 import './New.css';
 
 function New({ setCategory }) {
@@ -48,7 +49,7 @@ function New({ setCategory }) {
 
       window.gapi.client.sheets.spreadsheets.values
         .update({
-          spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+          spreadsheetId,
           range: `${sheetname}!A${totalLength + 2}`,
           valueInputOption: 'RAW',
           resource: value,
@@ -68,22 +69,22 @@ function New({ setCategory }) {
     };
 
     window.gapi.client.sheets.spreadsheets.values
-        .update({
-          spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
-          range: `storage!A${totalLength + 2}`,
-          valueInputOption: 'RAW',
-          resource: value,
-        })
-        .then(
-          response => {
-            console.log(`${response.result.updatedCells} cell updated`);
-            alert("제품 추가가 완료되었습니다.");
-            window.location.reload();
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      .update({
+        spreadsheetId,
+        range: `storage!A${totalLength + 2}`,
+        valueInputOption: 'RAW',
+        resource: value,
+      })
+      .then(
+        response => {
+          console.log(`${response.result.updatedCells} cell updated`);
+          alert('제품 추가가 완료되었습니다.');
+          window.location.reload();
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
   };
 
   useEffect(() => {
@@ -92,7 +93,7 @@ function New({ setCategory }) {
 
     window.gapi.client.sheets.spreadsheets.values
       .get({
-        spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+        spreadsheetId,
         range: `${sheetname1}!A2:D`,
       })
       .then(
@@ -106,7 +107,7 @@ function New({ setCategory }) {
 
     window.gapi.client.sheets.spreadsheets.values
       .get({
-        spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+        spreadsheetId,
         range: `${sheetname2}!A2:D`,
       })
       .then(
@@ -157,7 +158,9 @@ function New({ setCategory }) {
             <label htmlFor="prodcount">수량: </label>
             <input id="prodcount" type="number" value={inputs.prodcount} required onChange={handleInput} />
           </div>
-          <button ref={submitBtnRef} disabled={isLoading}>{isLoading ? <FaSpinner /> : "추가"}</button>
+          <button ref={submitBtnRef} disabled={isLoading}>
+            {isLoading ? <FaSpinner /> : '추가'}
+          </button>
         </form>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
+import { spreadsheetId } from 'common';
 import './Storage.css';
 
 function Storage({ setCategory }) {
@@ -37,7 +38,7 @@ function Storage({ setCategory }) {
 
     window.gapi.client.sheets.spreadsheets.values
       .update({
-        spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+        spreadsheetId,
         range: `${sheetname}!D${prodIdx + 2}`,
         valueInputOption: 'RAW',
         resource: value,
@@ -59,7 +60,7 @@ function Storage({ setCategory }) {
 
     window.gapi.client.sheets.spreadsheets.values
       .get({
-        spreadsheetId: '1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0',
+        spreadsheetId,
         range: `${sheetname}!A2:D`,
       })
       .then(
