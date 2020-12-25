@@ -1,26 +1,29 @@
-import React from "react";
-import { FaTruckMoving, FaBoxOpen, FaPlusSquare, FaUserCog } from "react-icons/fa";
-import { categoryStruct } from "common";
-import "./AdminMenu.css";
+import React from 'react';
+import { FaTruckMoving, FaBoxOpen, FaPlusSquare, FaUserCog, FaHistory } from 'react-icons/fa';
+import { categoryStruct } from 'common';
+import './AdminMenu.css';
 
 function AdminMenu({ replace, setCategory }) {
   const goMain = () => {
-    replace("/");
+    replace('/');
   };
 
   const selectCategory = e => {
     switch (e.currentTarget.id) {
-      case "drivers":
+      case 'drivers':
         setCategory({ ...categoryStruct, drivers: true });
         return;
-      case "storage":
+      case 'storage':
         setCategory({ ...categoryStruct, storage: true });
         return;
-      case "new":
+      case 'new':
         setCategory({ ...categoryStruct, new: true });
         return;
-      case "manage":
+      case 'manage':
         setCategory({ ...categoryStruct, manage: true });
+        return;
+      case 'log':
+        setCategory({ ...categoryStruct, log: true });
         return;
       default:
         return;
@@ -58,6 +61,12 @@ function AdminMenu({ replace, setCategory }) {
           <div id="manage" className="menu-item" onClick={selectCategory}>
             <FaUserCog />
             <p>기사 관리</p>
+          </div>
+        </div>
+        <div className="col-4">
+          <div id="log" className="menu-item" onClick={selectCategory}>
+            <FaHistory />
+            <p>판매 기록</p>
           </div>
         </div>
       </div>

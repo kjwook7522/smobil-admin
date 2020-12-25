@@ -4,5 +4,6 @@ export const categoryStruct = {
   storage: false,
   new: false,
   manage: false,
+  log: false,
   menu: false,
 };

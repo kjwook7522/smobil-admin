@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { AdminMenu, Drivers, Storage, New, Manage } from '../../components';
+import { AdminMenu, Drivers, Storage, New, Manage, SalesLog } from '../../components';
 import { categoryStruct } from 'common';
 import './AdminUser.css';
 
@@ -14,6 +14,7 @@ function AdminUser({ replace }) {
       {category.storage && <Storage setCategory={setCategory} />}
       {category.new && <New setCategory={setCategory} />}
       {category.manage && <Manage setCategory={setCategory} />}
+      {category.log && <SalesLog setCategory={setCategory} />}
     </section>
   );
 }
