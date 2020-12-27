@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
-import { spreadsheetId, categoryStruct } from 'common';
+import { spreadsheetId, categoryStruct, writeLog } from 'common';
 import './Drivers.css';
 
 function Drivers({ setCategory }) {
@@ -124,14 +124,26 @@ function Drivers({ setCategory }) {
   const keepProd = e => {
     const driverId = e.target.dataset.driverid;
     const prodId = e.target.dataset.productid;
+    const prodIdx = storage.findIndex(item => item[0] === prodId);
+    const fullname = driverInfos.find(item => item[0] === driverId)[1]
+    const prodCategory = storage[prodIdx][1];
+    const prodName = storage[prodIdx][2];
+
     minusCart(driverId, prodId);
     plusPart(prodId);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, `${fullname}(관리자)`, "창고 재고"]);
   };
 
   const sellProd = e => {
     const driverId = e.target.dataset.driverid;
     const prodId = e.target.dataset.productid;
+    const prodIdx = storage.findIndex(item => item[0] === prodId);
+    const fullname = driverInfos.find(item => item[0] === driverId)[1]
+    const prodCategory = storage[prodIdx][1];
+    const prodName = storage[prodIdx][2];
+
     minusCart(driverId, prodId);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, `${fullname}(관리자)`, "판매"]);
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { minusPart, plusProd, addItem } from "actions";
 import { TiArrowBack } from "react-icons/ti";
+import { writeLog } from "common";
 import "./Part.css";
 
 function Part({ category, setCategory, addCart, newItem, categoryList, cartList }) {
@@ -33,15 +34,16 @@ function Part({ category, setCategory, addCart, newItem, categoryList, cartList 
   const addProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = categoryList.findIndex(item => item[0] === prodId);
+    const fullname = localStorage.getItem("fullname");
+    const prodCategory = categoryList[prodIdx][1];
+    const prodName = categoryList[prodIdx][2];
 
-    // if (!cartList.find(item => item[0] === prodId)) {
-    //   newItem(prodId, chgNmToK(category), categoryList[prodIdx][2]);
-    // }
     if (Number(categoryList[prodIdx][3]) === 0) {
       alert("현재 재고가 없습니다.");
       return;
     }
     addCart(prodId);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, "트렁크 담기"]);
   };
 
   return (

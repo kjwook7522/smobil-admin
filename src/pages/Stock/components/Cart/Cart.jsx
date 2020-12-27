@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { initCart, minusProd, deleteItem, plusPart } from "actions";
-import { spreadsheetId } from "common";
+import { spreadsheetId, writeLog } from "common";
 import "./Cart.css";
 
 function Cart({ initList, myCart, sell, keep, remove }) {
@@ -13,7 +13,13 @@ function Cart({ initList, myCart, sell, keep, remove }) {
   const keepProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = myCart.findIndex(item => item[0] === prodId);
+    const fullname = localStorage.getItem("fullname");
+    const prodCategory = myCart[prodIdx][1];
+    const prodName = myCart[prodIdx][2];
+
     keep(prodId);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, "창고 재고"]);
+
     if (Number(myCart[prodIdx][3]) === 0) {
       // remove(prodId);
     }
@@ -21,7 +27,13 @@ function Cart({ initList, myCart, sell, keep, remove }) {
 
   const sellProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
+    const prodIdx = myCart.findIndex(item => item[0] === prodId);
+    const fullname = localStorage.getItem("fullname");
+    const prodCategory = myCart[prodIdx][1];
+    const prodName = myCart[prodIdx][2];
+
     sell(prodId);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, "판매"]);
   };
 
   return (

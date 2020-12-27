@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
 import { FaSpinner } from 'react-icons/fa';
-import { spreadsheetId, categoryStruct } from 'common';
+import { spreadsheetId, categoryStruct, writeLog } from 'common';
 import './New.css';
 
 function New({ setCategory }) {
@@ -33,10 +33,15 @@ function New({ setCategory }) {
   };
 
   const addNewStock = () => {
+    const prodId = parseInt(inputs.prodid);
+    const prodCategory = inputs.category;
+    const prodName = inputs.prodname;
+    const prodCount = parseInt(inputs.prodcount);
+
     drivers.forEach(driver => {
       const sheetname = driver[0];
       const value = {
-        values: [[parseInt(inputs.prodid), inputs.category, inputs.prodname, 0]],
+        values: [[prodId, prodCategory, prodName, 0]],
       };
 
       window.gapi.client.sheets.spreadsheets.values
@@ -57,7 +62,7 @@ function New({ setCategory }) {
     });
 
     const value = {
-      values: [[parseInt(inputs.prodid), inputs.category, inputs.prodname, parseInt(inputs.prodcount)]],
+      values: [[prodId, prodCategory, prodName, prodCount]],
     };
 
     window.gapi.client.sheets.spreadsheets.values
@@ -77,6 +82,8 @@ function New({ setCategory }) {
           console.log(reason.result.error.message);
         }
       );
+    
+    writeLog([prodId, prodCategory, prodName, prodCount, "관리자", "새상품 추가"]);
   };
 
   useEffect(() => {
