@@ -3,9 +3,15 @@ import { AdminUser, AccessError } from "./components";
 import "./Admin.css";
 
 function Admin({ history }) {
-  const adminID = "112235566169579065470";
+  const adminIDs = ["112235566169579065470", "107046323388850321793"];
   const userID = localStorage.getItem("userId");
-  return <div>{adminID === userID ? <AdminUser replace={history.replace} /> : <AccessError replace={history.replace} />}</div>;
+  let isAdmin = false;
+
+  adminIDs.forEach(adminID => {
+    if (adminID === userID) isAdmin = true;
+  })
+
+  return <>{isAdmin ? <AdminUser replace={history.replace} /> : <AccessError replace={history.replace} />}</>;
 }
 
 export default Admin;
