@@ -24,3 +24,33 @@
   color: #fff;
   cursor: pointer;
 }
+
+#sales-log .sales-table {
+  width: 100%;
+  margin-bottom: calc(30vh + 30px);
+  border-collapse: collapse;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+#sales-log .sales-table thead {
+  background-color: #152b5e;
+}
+
+#sales-log .sales-table thead th {
+  padding: 5px 0;
+  color: #fff;
+}
+
+#sales-log .sales-table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+
+#sales-log .sales-table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+
+#sales-log .sales-table tbody td {
+  padding: 5px 0;
+  text-align: center;
+}
