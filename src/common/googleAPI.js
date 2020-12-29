@@ -3,7 +3,8 @@ import { spreadsheetId } from 'common';
 export const writeLog = logData => {
   const sheetname = 'log';
   
-  logData.push(new Date());
+  const nowDate = (new Date()).toString();
+  logData.push(nowDate);
   const value = {
     values: [logData]
   }

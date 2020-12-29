@@ -7,6 +7,13 @@ import './SalesLog.css';
 function SalesLog({ setCategory }) {
   const [logs, setLogs] = useState([]);
 
+  const convertDate = date => {
+    const _date = new Date(date);
+    const timeStr = _date.toLocaleString('ko-KR');
+
+    return timeStr;
+  }
+
   useEffect(() => {
     const sheetname = 'log';
 
@@ -48,7 +55,7 @@ function SalesLog({ setCategory }) {
           </tr>
         </thead>
         <tbody>
-          {logs.map((item, idx) => (
+          {logs.slice().reverse().map((item, idx) => (
             <tr key={idx}>
               <td>{item[0]}</td>
               <td>{item[1]}</td>
@@ -56,7 +63,7 @@ function SalesLog({ setCategory }) {
               <td>{item[3]}</td>
               <td>{item[4]}</td>
               <td>{item[5]}</td>
-              <td>{item[6]}</td>
+              <td>{convertDate(item[6])}</td>
             </tr>
           ))}
         </tbody>
