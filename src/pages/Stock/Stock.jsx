@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { initPart } from "actions";
 import { Header, Category, Cart, Part } from "./components";
+import { spreadsheetId } from "common";
 import "./Stock.css";
 
 function Stock({ initList }) {
@@ -28,7 +29,7 @@ function mapDispatchToProps(dispatch) {
 
       window.gapi.client.sheets.spreadsheets.values
         .get({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${sheetname}!A2:D`,
         })
         .then(

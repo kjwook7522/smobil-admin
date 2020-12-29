@@ -1,0 +1,95 @@
+#drivers {
+  margin: 20px 0;
+}
+
+#drivers .header {
+  margin: 20px 0;
+  position: relative;
+}
+
+#drivers .header h1 {
+  text-align: center;
+  font-size: 30px;
+  color: #fff;
+}
+
+#drivers .header svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#drivers .driver-board {
+  width: 100%;
+  margin: 70px 0;
+  border-radius: 10px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+}
+
+#drivers .driver-board::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  #drivers .driver-board {
+    width: 100%;
+  }
+}
+
+#drivers .driver-board h1 {
+  padding: 10px 0;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  background-color: #152b5e;
+  color: #fff;
+}
+
+#drivers .driver-board .driver-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0 0 10px 10px;
+  background-color: #fff;
+}
+
+#drivers .driver-board .driver-table thead {
+  background-color: #ccc;
+}
+
+#drivers .driver-board .driver-table thead th {
+  padding: 5px 0;
+}
+
+#drivers .driver-board .driver-table tbody td {
+  padding: 5px 0;
+  text-align: center;
+}
+
+#drivers .driver-board .driver-table tbody button {
+  margin: 0 3px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#drivers .driver-board .driver-table tbody .keep-btn {
+  background-color: #3d27b9;
+}
+
+#drivers .driver-board .driver-table tbody .sell-btn {
+  background-color: #c93838;
+}
+
+@media (max-width: 769px) {
+  #drivers .driver-board {
+    max-height: 40vh;
+  }
+}

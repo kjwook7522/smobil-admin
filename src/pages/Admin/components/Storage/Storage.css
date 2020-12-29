@@ -1,0 +1,76 @@
+#storage-stock {
+  margin: 20px 0;
+}
+
+#storage-stock .header {
+  margin: 20px 0;
+  position: relative;
+}
+
+#storage-stock .header h1 {
+  text-align: center;
+  font-size: 30px;
+  color: #fff;
+}
+
+#storage-stock .header svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#storage-stock .storage-stock-table {
+  width: 100%;
+  margin-bottom: calc(30vh + 30px);
+  border-collapse: collapse;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+#storage-stock .storage-stock-table thead {
+  background-color: #152b5e;
+}
+
+#storage-stock .storage-stock-table thead th {
+  padding: 5px 0;
+  color: #fff;
+}
+
+#storage-stock .storage-stock-table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+
+#storage-stock .storage-stock-table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+
+#storage-stock .storage-stock-table tbody td {
+  padding: 5px 0;
+  text-align: center;
+}
+
+#storage-stock .storage-stock-table tbody button {
+  margin: 0 3px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #17a01e;
+}
+
+#storage-stock .storage-stock-table tbody input {
+  width: 100%;
+}
+
+@media (max-width: 769px) {
+  #storage-stock .storage-stock-table {
+    margin-bottom: calc(40vh + 20px);
+  }
+}
