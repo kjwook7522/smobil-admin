@@ -1,6 +1,6 @@
-import { spreadsheetId } from "common";
-import { PLUS_CART_COUNT, MINUS_CART_COUNT, ADD_CART_ITEM, INIT_CART } from "actions";
-import { DELETE_CART_ITEM } from "../actions/cart";
+import { spreadsheetId, updateSheetSingleValue, appendSheetValues } from 'common';
+import { PLUS_CART_COUNT, MINUS_CART_COUNT, ADD_CART_ITEM, INIT_CART } from 'actions';
+import { DELETE_CART_ITEM } from '../actions/cart';
 
 const initState = [];
 
@@ -25,21 +25,14 @@ export const myCart = (state = initState, action) => {
       };
 
       // google sheet update
-      window.gapi.client.sheets.spreadsheets.values
-        .update({
-          spreadsheetId,
-          range: `${sheetname}!D${prodIdx + 2}`,
-          valueInputOption: "RAW",
-          resource: value,
-        })
-        .then(
-          response => {
-            console.log(`${response.result.updatedCells} cell updated`);
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      updateSheetSingleValue(`${sheetname}!D${prodIdx + 2}`, prodCount + 1).then(
+        response => {
+          console.log(`${response.result.updatedCells} cell updated`);
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
 
       // local update
       updCart = state.slice();
@@ -55,21 +48,14 @@ export const myCart = (state = initState, action) => {
       };
 
       // google sheet update
-      window.gapi.client.sheets.spreadsheets.values
-        .update({
-          spreadsheetId,
-          range: `${sheetname}!D${prodIdx + 2}`,
-          valueInputOption: "RAW",
-          resource: value,
-        })
-        .then(
-          response => {
-            console.log(`${response.result.updatedCells} cell updated`);
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      updateSheetSingleValue(`${sheetname}!D${prodIdx + 2}`, prodCount - 1).then(
+        response => {
+          console.log(`${response.result.updatedCells} cell updated`);
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
 
       // local update
       updCart = state.slice();
@@ -77,27 +63,17 @@ export const myCart = (state = initState, action) => {
       return updCart;
 
     case ADD_CART_ITEM:
-      value = {
-        values: [[Number(action.id), action.kind, action.name, 0]],
-      };
+      value = [[Number(action.id), action.kind, action.name, 0]];
 
       // google sheet update
-      window.gapi.client.sheets.spreadsheets.values
-        .append({
-          spreadsheetId,
-          valueInputOption: "RAW",
-          insertDataOption: "INSERT_ROWS",
-          range: `${sheetname}!A1`,
-          resource: value,
-        })
-        .then(
-          response => {
-            console.log(`${response.result.updates.updatedRows} row updated`);
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      appendSheetValues(`${sheetname}!A1`, value).then(
+        response => {
+          console.log(`${response.result.updates.updatedRows} row updated`);
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
 
       // local update
       updCart = state.slice();
@@ -112,7 +88,7 @@ export const myCart = (state = initState, action) => {
             deleteDimension: {
               range: {
                 sheetId: 0,
-                dimension: "ROWS",
+                dimension: 'ROWS',
                 startIndex: prodIdx + 1,
                 endIndex: prodIdx + 2,
               },
@@ -127,7 +103,7 @@ export const myCart = (state = initState, action) => {
         })
         .then(
           response => {
-            console.log("1 row removed");
+            console.log('1 row removed');
           },
           reason => {
             console.log(reason.result.error.message);

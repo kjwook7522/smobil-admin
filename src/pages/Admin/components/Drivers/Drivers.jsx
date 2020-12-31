@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
-import { spreadsheetId, categoryStruct, writeLog } from 'common';
+import { categoryStruct, writeLog, getSheetValues, updateSheetSingleValue } from 'common';
 import './Drivers.css';
 
 function Drivers({ setCategory }) {
@@ -13,20 +13,15 @@ function Drivers({ setCategory }) {
     const sheetname = 'drivers';
 
     const promiseDriver = new Promise((resolve, reject) => {
-      window.gapi.client.sheets.spreadsheets.values
-        .get({
-          spreadsheetId,
-          range: `${sheetname}!A2:C`,
-        })
-        .then(
-          response => {
-            resolve(response.result.values);
-            setDriverInfos(response.result.values);
-          },
-          reason => {
-            reject(reason.result.error.message);
-          }
-        );
+      getSheetValues(`${sheetname}!A2:C`).then(
+        response => {
+          resolve(response.result.values);
+          setDriverInfos(response.result.values);
+        },
+        reason => {
+          reject(reason.result.error.message);
+        }
+      );
     });
 
     return promiseDriver;
@@ -38,71 +33,51 @@ function Drivers({ setCategory }) {
     ids.forEach(id => {
       const sheetname = id;
 
-      window.gapi.client.sheets.spreadsheets.values
-        .get({
-          spreadsheetId,
-          range: `${sheetname}!A2:D`,
-        })
-        .then(
-          response => {
-            driverCartTemp = { ...driverCartTemp, [id]: response.result.values };
-            setDriverCart(driverCartTemp);
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      getSheetValues(`${sheetname}!A2:D`).then(
+        response => {
+          driverCartTemp = { ...driverCartTemp, [id]: response.result.values };
+          setDriverCart(driverCartTemp);
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
     });
   };
 
   const getStorage = () => {
     const sheetname = 'storage';
 
-    window.gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId,
-        range: `${sheetname}!A2:D`,
-      })
-      .then(
-        response => {
-          setStorage([...response.result.values]);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
+    getSheetValues(`${sheetname}!A2:D`).then(
+      response => {
+        setStorage([...response.result.values]);
+      },
+      reason => {
+        console.log(reason.result.error.message);
+      }
+    );
   };
 
   const updateGoogleSheet = (sheetname, prodIdx, value) => {
-    window.gapi.client.sheets.spreadsheets.values
-      .update({
-        spreadsheetId,
-        range: `${sheetname}!D${prodIdx + 2}`,
-        valueInputOption: 'RAW',
-        resource: value,
-      })
-      .then(
-        response => {
-          console.log(`${response.result.updatedCells} cell updated`);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
+    updateSheetSingleValue(`${sheetname}!D${prodIdx + 2}`, value).then(
+      response => {
+        console.log(`${response.result.updatedCells} cell updated`);
+      },
+      reason => {
+        console.log(reason.result.error.message);
+      }
+    );
   };
 
   const minusCart = (driverId, prodId) => {
     const prodIdx = driverCart[driverId].findIndex(item => item[0] === prodId);
     const prodCount = Number(driverCart[driverId][prodIdx][3]);
-    const value = {
-      values: [[prodCount - 1]],
-    };
 
     let tempDriverCart = driverCart[driverId];
     tempDriverCart[prodIdx][3] -= 1;
     setDriverCart({ ...driverCart, [driverId]: tempDriverCart });
 
-    updateGoogleSheet(driverId, prodIdx, value);
+    updateGoogleSheet(driverId, prodIdx, prodCount - 1);
   };
 
   const plusPart = prodId => {
@@ -110,40 +85,37 @@ function Drivers({ setCategory }) {
 
     const prodIdx = storage.findIndex(item => item[0] === prodId);
     const prodCount = Number(storage[prodIdx][3]);
-    const value = {
-      values: [[prodCount + 1]],
-    };
 
     let tempStorage = [...storage];
     tempStorage[prodIdx][3] = parseInt(tempStorage[prodIdx][3]) + 1;
     setStorage(tempStorage);
 
-    updateGoogleSheet(sheetname, prodIdx, value);
+    updateGoogleSheet(sheetname, prodIdx, prodCount + 1);
   };
 
   const keepProd = e => {
     const driverId = e.target.dataset.driverid;
     const prodId = e.target.dataset.productid;
     const prodIdx = storage.findIndex(item => item[0] === prodId);
-    const fullname = driverInfos.find(item => item[0] === driverId)[1]
+    const fullname = driverInfos.find(item => item[0] === driverId)[1];
     const prodCategory = storage[prodIdx][1];
     const prodName = storage[prodIdx][2];
 
     minusCart(driverId, prodId);
     plusPart(prodId);
-    writeLog([parseInt(prodId), prodCategory, prodName, 1, `${fullname}(관리자)`, "창고 재고"]);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, `${fullname}(관리자)`, '창고 재고']);
   };
 
   const sellProd = e => {
     const driverId = e.target.dataset.driverid;
     const prodId = e.target.dataset.productid;
     const prodIdx = storage.findIndex(item => item[0] === prodId);
-    const fullname = driverInfos.find(item => item[0] === driverId)[1]
+    const fullname = driverInfos.find(item => item[0] === driverId)[1];
     const prodCategory = storage[prodIdx][1];
     const prodName = storage[prodIdx][2];
 
     minusCart(driverId, prodId);
-    writeLog([parseInt(prodId), prodCategory, prodName, 1, `${fullname}(관리자)`, "판매"]);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, `${fullname}(관리자)`, '판매']);
   };
 
   useEffect(() => {

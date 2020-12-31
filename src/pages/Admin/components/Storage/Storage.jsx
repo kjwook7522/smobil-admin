@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
-import { spreadsheetId, categoryStruct } from 'common';
+import { categoryStruct, getSheetValues, updateSheetSingleValue } from 'common';
 import './Storage.css';
 
 function Storage({ setCategory }) {
@@ -24,53 +24,37 @@ function Storage({ setCategory }) {
     const prodIdx = storageList.findIndex(item => item[0] === prodId);
     const prodCount = inputs[prodId];
 
-    const value = {
-      values: [[prodCount]],
-    };
-
-    window.gapi.client.sheets.spreadsheets.values
-      .update({
-        spreadsheetId,
-        range: `${sheetname}!D${prodIdx + 2}`,
-        valueInputOption: 'RAW',
-        resource: value,
-      })
-      .then(
-        response => {
-          console.log(`${response.result.updatedCells} cell updated`);
-          alert('적용되었습니다.');
-        },
-        reason => {
-          console.log(reason.result.error.message);
-          alert('적용이 실패하였습니다.');
-        }
-      );
+    updateSheetSingleValue(`${sheetname}!D${prodIdx + 2}`, prodCount).then(
+      response => {
+        console.log(`${response.result.updatedCells} cell updated`);
+        alert('적용되었습니다.');
+      },
+      reason => {
+        console.log(reason.result.error.message);
+        alert('적용이 실패하였습니다.');
+      }
+    );
   };
 
   useEffect(() => {
     const sheetname = 'storage';
 
-    window.gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId,
-        range: `${sheetname}!A2:D`,
-      })
-      .then(
-        response => {
-          const data = response.result.values;
-          const tempInputs = {};
+    getSheetValues(`${sheetname}!A2:D`).then(
+      response => {
+        const data = response.result.values;
+        const tempInputs = {};
 
-          data.forEach(row => {
-            tempInputs[row[0]] = row[3];
-          });
+        data.forEach(row => {
+          tempInputs[row[0]] = row[3];
+        });
 
-          setStorageList(data);
-          setInputs(tempInputs);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
+        setStorageList(data);
+        setInputs(tempInputs);
+      },
+      reason => {
+        console.log(reason.result.error.message);
+      }
+    );
   }, []);
 
   return (

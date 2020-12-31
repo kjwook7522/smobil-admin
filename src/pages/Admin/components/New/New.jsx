@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { TiArrowBack } from 'react-icons/ti';
 import { FaSpinner } from 'react-icons/fa';
-import { spreadsheetId, categoryStruct, writeLog } from 'common';
+import { categoryStruct, writeLog, appendSheetValues, getSheetValues } from 'common';
 import './New.css';
 
 function New({ setCategory }) {
@@ -17,7 +17,6 @@ function New({ setCategory }) {
 
   const [inputs, setInputs] = useState(initInput);
   const [drivers, setDrivers] = useState([]);
-  const [totalLength, setTotalLength] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = e => {
@@ -40,84 +39,44 @@ function New({ setCategory }) {
 
     drivers.forEach(driver => {
       const sheetname = driver[0];
-      const value = {
-        values: [[prodId, prodCategory, prodName, 0]],
-      };
 
-      window.gapi.client.sheets.spreadsheets.values
-        .update({
-          spreadsheetId,
-          range: `${sheetname}!A${totalLength + 2}`,
-          valueInputOption: 'RAW',
-          resource: value,
-        })
-        .then(
-          response => {
-            console.log(`${response.result.updatedCells} cell updated`);
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
-    });
-
-    const value = {
-      values: [[prodId, prodCategory, prodName, prodCount]],
-    };
-
-    window.gapi.client.sheets.spreadsheets.values
-      .update({
-        spreadsheetId,
-        range: `storage!A${totalLength + 2}`,
-        valueInputOption: 'RAW',
-        resource: value,
-      })
-      .then(
+      const values = [[prodId, prodCategory, prodName, 0]];
+      appendSheetValues(sheetname, values).then(
         response => {
           console.log(`${response.result.updatedCells} cell updated`);
-          alert('제품 추가가 완료되었습니다.');
-          window.location.reload();
         },
         reason => {
           console.log(reason.result.error.message);
         }
       );
-    
-    writeLog([prodId, prodCategory, prodName, prodCount, "관리자", "새상품 추가"]);
+    });
+
+    const values = [[prodId, prodCategory, prodName, prodCount]];
+    appendSheetValues('storage', values).then(
+      response => {
+        alert('제품 추가가 완료되었습니다.');
+        window.location.reload();
+      },
+      reason => {
+        console.log(reason.result.error.message);
+      }
+    );
+
+    writeLog([prodId, prodCategory, prodName, prodCount, '관리자', '새상품 추가']);
   };
 
   useEffect(() => {
-    const sheetname1 = 'drivers';
-    const sheetname2 = 'storage';
-
-    window.gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId,
-        range: `${sheetname1}!A2:D`,
-      })
-      .then(
-        response => {
-          setDrivers(response.result.values);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
-
-    window.gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId,
-        range: `${sheetname2}!A2:D`,
-      })
-      .then(
-        response => {
-          setTotalLength(response.result.values.length);
-        },
-        reason => {
-          console.log(reason.result.error.message);
-        }
-      );
+    const sheetname = 'drivers';
+    getSheetValues(`${sheetname}!A2:D`).then(
+      response => {
+        setDrivers(response.result.values);
+      },
+      reason => {
+        console.log(reason.result.error.message);
+      }
+    );
   }, []);
+  
   return (
     <section id="new-product">
       <div className="header">

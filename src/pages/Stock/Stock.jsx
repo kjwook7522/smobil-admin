@@ -1,13 +1,13 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { initPart } from "actions";
-import { Header, Category, Cart, Part } from "./components";
-import { spreadsheetId } from "common";
-import "./Stock.css";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { initPart } from 'actions';
+import { Header, Category, Cart, Part } from './components';
+import { getSheetValues } from 'common';
+import './Stock.css';
 
 function Stock({ initList }) {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     initList();
@@ -25,21 +25,16 @@ function Stock({ initList }) {
 function mapDispatchToProps(dispatch) {
   return {
     initList: () => {
-      const sheetname = "storage";
+      const sheetname = 'storage';
 
-      window.gapi.client.sheets.spreadsheets.values
-        .get({
-          spreadsheetId,
-          range: `${sheetname}!A2:D`,
-        })
-        .then(
-          response => {
-            dispatch(initPart(response.result.values));
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      getSheetValues(`${sheetname}!A2:D`).then(
+        response => {
+          dispatch(initPart(response.result.values));
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
     },
   };
 }

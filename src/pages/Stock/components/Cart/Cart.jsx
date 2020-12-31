@@ -1,9 +1,9 @@
-import React from "react";
-import { useEffect } from "react";
-import { connect } from "react-redux";
-import { initCart, minusProd, deleteItem, plusPart } from "actions";
-import { spreadsheetId, writeLog } from "common";
-import "./Cart.css";
+import React from 'react';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { initCart, minusProd, deleteItem, plusPart } from 'actions';
+import { writeLog, getSheetValues } from 'common';
+import './Cart.css';
 
 function Cart({ initList, myCart, sell, keep, remove }) {
   useEffect(() => {
@@ -13,12 +13,12 @@ function Cart({ initList, myCart, sell, keep, remove }) {
   const keepProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = myCart.findIndex(item => item[0] === prodId);
-    const fullname = localStorage.getItem("fullname");
+    const fullname = localStorage.getItem('fullname');
     const prodCategory = myCart[prodIdx][1];
     const prodName = myCart[prodIdx][2];
 
     keep(prodId);
-    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, "창고 재고"]);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, '창고 재고']);
 
     if (Number(myCart[prodIdx][3]) === 0) {
       // remove(prodId);
@@ -28,12 +28,12 @@ function Cart({ initList, myCart, sell, keep, remove }) {
   const sellProd = e => {
     const prodId = e.target.parentElement.parentElement.id;
     const prodIdx = myCart.findIndex(item => item[0] === prodId);
-    const fullname = localStorage.getItem("fullname");
+    const fullname = localStorage.getItem('fullname');
     const prodCategory = myCart[prodIdx][1];
     const prodName = myCart[prodIdx][2];
 
     sell(prodId);
-    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, "판매"]);
+    writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, '판매']);
   };
 
   return (
@@ -76,23 +76,19 @@ function Cart({ initList, myCart, sell, keep, remove }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  const driverId = localStorage.getItem("userId");
+  const driverId = localStorage.getItem('userId');
 
   return {
     initList: () => {
-      window.gapi.client.sheets.spreadsheets.values
-        .get({
-          spreadsheetId,
-          range: `${driverId}!A2:D`,
-        })
-        .then(
-          response => {
-            dispatch(initCart(response.result.values));
-          },
-          reason => {
-            console.log(reason.result.error.message);
-          }
-        );
+      getSheetValues(`${driverId}!A2:D`).then(
+        response => {
+          dispatch(initCart(response.result.values));
+        },
+        reason => {
+          console.log(reason.result.error.message);
+        }
+      );
+
     },
     keep: prodId => {
       dispatch(minusProd(prodId, driverId));
