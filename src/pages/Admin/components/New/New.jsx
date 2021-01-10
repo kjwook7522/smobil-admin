@@ -36,6 +36,7 @@ function New({ setCategory }) {
     const prodCategory = inputs.category;
     const prodName = inputs.prodname;
     const prodCount = parseInt(inputs.prodcount);
+    let values;
 
     drivers.forEach(driver => {
       const sheetname = driver[0];
@@ -51,7 +52,17 @@ function New({ setCategory }) {
       );
     });
 
-    const values = [[prodId, prodCategory, prodName, prodCount]];
+    values = [[prodId, prodCategory, prodName, 0]];
+    appendSheetValues('template', values).then(
+      response => {
+        console.log(`${response.result.updatedCells} cell updated`);
+      },
+      reason => {
+        console.log(reason.result.error.message);
+      }
+    );
+
+    values = [[prodId, prodCategory, prodName, prodCount]];
     appendSheetValues('storage', values).then(
       response => {
         alert('제품 추가가 완료되었습니다.');
@@ -61,6 +72,8 @@ function New({ setCategory }) {
         console.log(reason.result.error.message);
       }
     );
+
+    
 
     writeLog([prodId, prodCategory, prodName, prodCount, '관리자', '새상품 추가']);
   };

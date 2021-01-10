@@ -69,3 +69,51 @@ export const appendSheetValues = (range, values) => {
 
   return result;
 };
+
+export const addNewSheet = sheetname => {
+  const body = {
+    requests: [
+      {
+        addSheet: {
+          properties: {
+            title: sheetname,
+          },
+        },
+      },
+    ],
+  };
+  const result = window.gapi.client.sheets.spreadsheets.batchUpdate(
+    {
+      spreadsheetId,
+    },
+    body
+  );
+
+  return result;
+};
+
+export const copyTemplateSheet = destSheetId => {
+  const body = {
+    requests: [
+      {
+        copyPaste: {
+          source: {
+            sheetId: 1906660678,
+          },
+          destination: {
+            sheetId: destSheetId,
+          },
+          pasteType: 'PASTE_NORMAL',
+        },
+      },
+    ],
+  };
+  const result = window.gapi.client.sheets.spreadsheets.batchUpdate(
+    {
+      spreadsheetId,
+    },
+    body
+  );
+
+  return result;
+};

@@ -1,0 +1,117 @@
+#manage {
+  margin: 20px 0;
+}
+
+#manage .header {
+  margin: 20px 0;
+  position: relative;
+}
+
+#manage .header h1 {
+  text-align: center;
+  font-size: 30px;
+  color: #fff;
+}
+
+#manage .header svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#manage .add-driver {
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+#manage .add-driver h1 {
+  padding: 10px 0;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  background-color: #152b5e;
+  color: #fff;
+}
+
+#manage .add-driver .add-driver-form {
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+  background-color: #fff;
+}
+
+#manage .add-driver .add-driver-form .input-box {
+  margin: 10px 0;
+}
+
+#manage .add-driver .add-driver-form .input-box label {
+  width: 80px;
+  display: inline-block;
+}
+
+#manage .add-driver .add-driver-form .input-box input {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  font-size: 0.85em;
+}
+
+#manage .add-driver .add-driver-form .input-box input:focus {
+  outline: none;
+  border: 1px solid #17a01e;
+}
+
+#manage .add-driver .add-driver-form button {
+  width: 200px;
+  margin-top: 30px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #152b5e;
+  font-size: 1em;
+  color: #fff;
+  cursor: pointer;
+}
+
+#manage .driver-list {
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+#manage .driver-list h1 {
+  padding: 5px 0;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  background-color: #152b5e;
+  color: #fff;
+}
+
+#manage .driver-list table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0 0 10px 10px;
+  background-color: #fff;
+}
+
+#manage .driver-list table thead {
+  background-color: #ccc;
+}
+
+#manage .driver-list table thead th {
+  padding: 5px 0;
+}
+
+#manage .driver-list table tbody td {
+  padding: 5px 0;
+  text-align: center;
+}
