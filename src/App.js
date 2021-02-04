@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Loading } from "common";
 import { Login, Stock, Admin, GoogleId } from "pages";
 import { setLogin, setLoading } from "actions";
+import { spreadsheetId } from "./common/constant";
 import "./App.css";
 
 function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
@@ -61,7 +62,7 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
 
       window.gapi.client.sheets.spreadsheets.values
         .get({
-          spreadsheetId: "1UvqnHHLpQIZHUNEERvyJ-2YGhYhBDPYxHbul3Jm9qp0",
+          spreadsheetId,
           range: `${sheetname}!A2:C`,
         })
         .then(

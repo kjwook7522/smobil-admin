@@ -3,7 +3,7 @@ import { AdminUser, AccessError } from "./components";
 import "./Admin.css";
 
 function Admin({ history }) {
-  const adminIDs = ["112235566169579065470", "107046323388850321793"];
+  const adminIDs = ["112235566169579065470", "107046323388850321793", "109489316542259397263", "110821117138985067502"];
   const userID = localStorage.getItem("userId");
   let isAdmin = false;
 
