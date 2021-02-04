@@ -10,14 +10,14 @@ function Stock({ initList }) {
   const [category, setCategory] = useState('');
 
   useEffect(() => {
-    initList();
+    // initList();
   }, [initList]);
 
   return (
     <div id="stock">
       {category ? <></> : <Header />}
       {category ? <Part category={category} setCategory={setCategory} /> : <Category setCategory={setCategory} />}
-      <Cart />
+      {/* <Cart /> */}
     </div>
   );
 }

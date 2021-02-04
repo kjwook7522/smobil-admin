@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import firebase from 'firebase/app';
 
 function Header() {
-  const name = localStorage.getItem("fullname");
+  // const name = localStorage.getItem("fullname");
+  const name = firebase.auth().currentUser.displayName
   const handleSignoutClick = () => {
-    window.gapi.auth2.getAuthInstance().signOut();
+    // window.gapi.auth2.getAuthInstance().signOut();
+    firebase.auth().signOut();
   };
 
   return (
