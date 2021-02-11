@@ -1,15 +1,16 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Loading } from 'common';
 import { Login, Stock, Admin, GoogleId } from 'pages';
-import { setLogin, setLoading } from 'actions';
+import { setLogin, setLoading, initUser } from 'actions';
 import { spreadsheetId } from './common/constant';
 import { authService } from './firebaseApp';
 import './App.css';
 
 function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
+  const dispatch = useDispatch();
   useEffect(() => {
     const CLIENT_ID = '542989334376-gjqs6grpj2o23t91n1ttht0gtu10mk3g.apps.googleusercontent.com';
     const API_KEY = 'AIzaSyALB0KHFqZ_Be9WJKf_eIa0Nb3GHjr_LxM';
@@ -101,7 +102,7 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
 
     authService.onAuthStateChanged(user => {
       if (user) {
-        var uid = user.uid;
+        dispatch(initUser(user));
         dispatchLogin(true);
         dispatchLoading(false);
         // ...

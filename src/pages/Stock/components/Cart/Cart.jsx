@@ -1,13 +1,16 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { initCart, minusProd, deleteItem, plusPart } from 'actions';
 import { writeLog, getSheetValues } from 'common';
 import './Cart.css';
+import { storeService } from '../../../../firebaseApp';
 
 function Cart({ initList, myCart, sell, keep, remove }) {
+  const user = useSelector(state => state.userReducer);
   useEffect(() => {
-    initList();
+    // initList();
+    getCartList(user.uid);
   }, [initList]);
 
   const keepProd = e => {
@@ -24,6 +27,11 @@ function Cart({ initList, myCart, sell, keep, remove }) {
       // remove(prodId);
     }
   };
+
+  const getCartList = async (uid) => {
+    const collection = await storeService.collection(uid).get();
+    console.log(collection.docs[0].data());
+  }
 
   const sellProd = e => {
     const prodId = e.target.parentElement.parentElement.id;

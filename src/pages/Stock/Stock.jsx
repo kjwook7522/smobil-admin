@@ -17,7 +17,7 @@ function Stock({ initList }) {
     <div id="stock">
       {category ? <></> : <Header />}
       {category ? <Part category={category} setCategory={setCategory} /> : <Category setCategory={setCategory} />}
-      {/* <Cart /> */}
+      <Cart />
     </div>
   );
 }
