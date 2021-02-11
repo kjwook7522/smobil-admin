@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -8,9 +8,13 @@ import { setLogin, setLoading, initUser } from 'actions';
 import { spreadsheetId } from './common/constant';
 import { authService } from './firebaseApp';
 import './App.css';
+import AppRouter from 'Router';
 
 function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
   const dispatch = useDispatch();
+
+  const [isLogin, setIsLogin] = useState(false);
+
   useEffect(() => {
     const CLIENT_ID = '542989334376-gjqs6grpj2o23t91n1ttht0gtu10mk3g.apps.googleusercontent.com';
     const API_KEY = 'AIzaSyALB0KHFqZ_Be9WJKf_eIa0Nb3GHjr_LxM';
@@ -105,11 +109,13 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
         dispatch(initUser(user));
         dispatchLogin(true);
         dispatchLoading(false);
+        setIsLogin(true);
         // ...
       } else {
         console.log('sign out');
         dispatchLogin(false);
         dispatchLoading(false);
+        setIsLogin(false);
         // User is signed out
         // ...
       }
@@ -118,7 +124,7 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
 
   return (
     <div className="App">
-      <Router>
+      {/* <Router>
         <Switch>
           {isLoading ? (
             <Route exact path="/" component={Loading} />
@@ -136,7 +142,8 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
           )}
           <Route path="/googleid" component={GoogleId} />
         </Switch>
-      </Router>
+      </Router> */}
+      <AppRouter isLogin={isLogin} />
     </div>
   );
 }
