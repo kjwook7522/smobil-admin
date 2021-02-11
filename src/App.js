@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Loading } from 'common';
 import { Login, Stock, Admin, GoogleId } from 'pages';
@@ -9,11 +9,11 @@ import { spreadsheetId } from './common/constant';
 import { authService } from './firebaseApp';
 import './App.css';
 import AppRouter from 'Router';
+import { loginOff, loginOn } from 'actions/login';
 
 function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
   const dispatch = useDispatch();
-
-  const [isLogin, setIsLogin] = useState(false);
+  const isLogin = useSelector(state => state.loginReducer);
 
   useEffect(() => {
     const CLIENT_ID = '542989334376-gjqs6grpj2o23t91n1ttht0gtu10mk3g.apps.googleusercontent.com';
@@ -107,15 +107,15 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
     authService.onAuthStateChanged(user => {
       if (user) {
         dispatch(initUser(user));
+        dispatch(loginOn());
         dispatchLogin(true);
         dispatchLoading(false);
-        setIsLogin(true);
         // ...
       } else {
         console.log('sign out');
+        dispatch(loginOff());
         dispatchLogin(false);
         dispatchLoading(false);
-        setIsLogin(false);
         // User is signed out
         // ...
       }
