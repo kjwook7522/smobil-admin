@@ -1,39 +1,19 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { initCart, minusProd, deleteItem, plusPart } from 'actions';
-import { writeLog, getSheetValues } from 'common';
-import './Trunk.css';
-import { QueryDocumentSnapshot, storeService } from 'firebaseApp';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from 'reducers';
-import { minusStorageProd, plusStorageProd } from 'common/service/storageService';
+import { QueryDocumentSnapshot, storeService } from 'firebaseApp';
+import { plusStorageProd } from 'common/service/storageService';
 import { minusTrunkProd } from 'common/service/trunkService';
+import './Trunk.css';
 
-// const Trunk: React.FC = ({ initList, myCart, sell, keep, remove }) => {
 const Trunk: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
   const { uid } = user;
   const [myTrunk, setMyTrunk] = useState<Array<QueryDocumentSnapshot>>([]);
 
   useEffect(() => {
-    // initList();
     listenTrunkList();
   }, []);
-
-  // const keepProd = e => {
-  //   const prodId = e.target.parentElement.parentElement.id;
-  //   const prodIdx = myCart.findIndex(item => item[0] === prodId);
-  //   const fullname = localStorage.getItem('fullname');
-  //   const prodCategory = myCart[prodIdx][1];
-  //   const prodName = myCart[prodIdx][2];
-
-  //   keep(prodId);
-  //   writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, '창고 재고']);
-
-  //   if (Number(myCart[prodIdx][3]) === 0) {
-  //     // remove(prodId);
-  //   }
-  // };
 
   const listenTrunkList = () => {
     storeService.collection(uid).onSnapshot(querySnapShot => {
@@ -49,17 +29,6 @@ const Trunk: React.FC = () => {
   const sellProd = (id: string) => {
     minusTrunkProd(id, uid);
   };
-
-  // const sellProd = e => {
-  //   const prodId = e.target.parentElement.parentElement.id;
-  //   const prodIdx = myCart.findIndex(item => item[0] === prodId);
-  //   const fullname = localStorage.getItem('fullname');
-  //   const prodCategory = myCart[prodIdx][1];
-  //   const prodName = myCart[prodIdx][2];
-
-  //   sell(prodId);
-  //   writeLog([parseInt(prodId), prodCategory, prodName, 1, fullname, '판매']);
-  // };
 
   return (
     <section id="trunk">
@@ -101,38 +70,4 @@ const Trunk: React.FC = () => {
   );
 };
 
-// function mapDispatchToProps(dispatch) {
-//   const driverId = localStorage.getItem('userId');
-
-//   return {
-//     initList: () => {
-//       getSheetValues(`${driverId}!A2:D`).then(
-//         response => {
-//           dispatch(initCart(response.result.values));
-//         },
-//         reason => {
-//           console.log(reason.result.error.message);
-//         }
-//       );
-//     },
-//     keep: prodId => {
-//       dispatch(minusProd(prodId, driverId));
-//       dispatch(plusPart(prodId));
-//     },
-//     sell: prodId => {
-//       dispatch(minusProd(prodId, driverId));
-//     },
-//     remove: prodId => {
-//       dispatch(deleteItem(prodId));
-//     },
-//   };
-// }
-
-// function mapStateToProps(state) {
-//   return {
-//     myCart: state.myCart,
-//   };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 export default Trunk;

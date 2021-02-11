@@ -4,3 +4,8 @@ interface Production {
   category: string;
   count: number;
 }
+
+interface DefaultAction {
+  type: string;
+  payload: boolean;
+}
