@@ -6,8 +6,7 @@ import { Loading } from 'common';
 import { Login, Stock, Admin, GoogleId } from 'pages';
 import { setLogin, setLoading } from 'actions';
 import { spreadsheetId } from './common/constant';
-import firebase from 'firebase/app';
-import './firebaseApp';
+import { authService } from './firebaseApp';
 import './App.css';
 
 function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
@@ -100,7 +99,7 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
 
     // handleClientLoad();
 
-    firebase.auth().onAuthStateChanged(user => {
+    authService.onAuthStateChanged(user => {
       if (user) {
         var uid = user.uid;
         dispatchLogin(true);
@@ -109,6 +108,7 @@ function App({ isLogined, isLoading, dispatchLogin, dispatchLoading }) {
       } else {
         console.log('sign out');
         dispatchLogin(false);
+        dispatchLoading(false);
         // User is signed out
         // ...
       }

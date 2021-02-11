@@ -2,6 +2,7 @@ import React from 'react';
 import firebase from 'firebase/app';
 import { FcGoogle } from 'react-icons/fc';
 import './Login.css';
+import { authService, googleProvider } from '../../firebaseApp';
 
 function Login() {
   const handleAuthClick = () => {
@@ -9,11 +10,8 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    var provider = new firebase.auth.GoogleAuthProvider();
-
-    firebase
-      .auth()
-      .signInWithPopup(provider)
+    authService
+      .signInWithPopup(googleProvider)
       .then(result => {
         var credential = result.credential;
 

@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./Header.css";
-import firebase from 'firebase/app';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Header.css';
+import { authService } from '../../../../firebaseApp';
 
 function Header() {
   // const name = localStorage.getItem("fullname");
-  const name = firebase.auth().currentUser.displayName
+  const name = authService.currentUser.displayName;
   const handleSignoutClick = () => {
     // window.gapi.auth2.getAuthInstance().signOut();
-    firebase.auth().signOut();
+    authService.signOut();
   };
 
   return (
