@@ -1,8 +1,7 @@
 import React from 'react';
-import firebase from 'firebase/app';
 import { FcGoogle } from 'react-icons/fc';
 import './Login.css';
-import { authService, googleProvider } from '../../firebaseApp';
+import { authService, googleProvider } from 'firebaseApp';
 
 function Login() {
   const handleAuthClick = () => {

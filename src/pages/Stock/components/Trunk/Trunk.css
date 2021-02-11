@@ -1,4 +1,4 @@
-#cart {
+#trunk {
   width: 600px;
   max-height: 30vh;
   position: fixed;
@@ -8,17 +8,17 @@
   -ms-overflow-style: none;
 }
 
-#cart::-webkit-scrollbar {
+#trunk::-webkit-scrollbar {
   display: none;
 }
 
 @media (max-width: 600px) {
-  #cart {
+  #trunk {
     width: 100%;
   }
 }
 
-#cart h1 {
+#trunk h1 {
   padding: 10px 0;
   border-radius: 10px 10px 0 0;
   text-align: center;
@@ -26,27 +26,43 @@
   color: #fff;
 }
 
-#cart .cart-table {
+#trunk .trunk-table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 0 0 10px 10px;
   background-color: #fff;
 }
 
-#cart .cart-table thead {
+#trunk .trunk-table thead {
   background-color: #ccc;
 }
 
-#cart .cart-table thead th {
+#trunk .trunk-table thead th {
   padding: 5px 0;
 }
 
-#cart .cart-table tbody td {
+#trunk .trunk-table thead tr:nth-child(1) {
+  width: 15%;
+}
+
+#trunk .trunk-table thead tr:nth-child(2) {
+  width: 15%;
+}
+
+#trunk .trunk-table thead tr:nth-child(4) {
+  width: 15%;
+}
+
+#trunk .trunk-table thead tr:nth-child(5) {
+  width: 15%;
+}
+
+#trunk .trunk-table tbody td {
   padding: 5px 0;
   text-align: center;
 }
 
-#cart .cart-table tbody button {
+#trunk .trunk-table tbody button {
   margin: 0 3px;
   padding: 4px 10px;
   border: none;
@@ -55,16 +71,16 @@
   cursor: pointer;
 }
 
-#cart .cart-table tbody .keep-btn {
+#trunk .trunk-table tbody .keep-btn {
   background-color: #3d27b9;
 }
 
-#cart .cart-table tbody .sell-btn {
+#trunk .trunk-table tbody .sell-btn {
   background-color: #c93838;
 }
 
 @media (max-width: 769px) {
-  #cart {
+  #trunk {
     max-height: 40vh;
   }
 }

@@ -5,10 +5,12 @@ import { loading } from "./loading";
 import { loginReducer } from "./login";
 import { userReducer } from "./user";
 
-export default combineReducers({
+export const rootReducer = combineReducers({
   myCart,
   partList,
   loading,
   loginReducer,
   userReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>
