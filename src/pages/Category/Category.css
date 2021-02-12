@@ -1,0 +1,86 @@
+#category {
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+}
+
+#category .header {
+  margin: 20px 0;
+  position: relative;
+}
+
+#category .header h1 {
+  text-align: center;
+  font-size: 30px;
+  color: #fff;
+}
+
+#category .header svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#category .category-table {
+  width: 100%;
+  margin-bottom: calc(30vh + 30px);
+  border-collapse: collapse;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+#category .category-table thead {
+  background-color: #152b5e;
+}
+
+#category .category-table thead tr:nth-child(1) {
+  width: 15%;
+}
+
+#category .category-table thead tr:nth-child(3) {
+  width: 15%;
+}
+
+#category .category-table thead tr:nth-child(4) {
+  width: 15%;
+}
+
+#category .category-table thead th {
+  padding: 5px 0;
+  color: #fff;
+}
+
+#category .category-table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+
+#category .category-table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+
+#category .category-table tbody td {
+  padding: 5px 0;
+  text-align: center;
+}
+
+#category .category-table tbody button {
+  margin: 0 3px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #17a01e;
+}
+
+@media (max-width: 769px) {
+  #category .category-table {
+    margin-bottom: calc(40vh + 20px);
+  }
+}
