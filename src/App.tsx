@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authService, storeService } from 'firebaseApp';
-import { initUser } from 'actions/user';
+import { driverConfirm, initUser } from 'actions/user';
 import { loginOff, loginOn } from 'actions/login';
 import { loadingOff, loadingOn } from 'actions/loading';
 import { RootState } from 'common/store';
 import { Loading } from 'common';
 import AppRouter from 'Router';
-import { driverConfirm } from 'actions/driver';
+// import { driverConfirm } from 'actions/driver';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const isLoading = useSelector((state: RootState) => state.loadingReducer);
 
   useEffect(() => {
@@ -34,7 +36,13 @@ const App: React.FC = () => {
 
       if (user) {
         console.log('sign in');
-        dispatch(initUser(user));
+        const userObj: User = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+
+        dispatch(initUser(userObj));
         dispatch(loginOn());
         await checkDrivers(user.uid);
       } else {
@@ -49,11 +57,10 @@ const App: React.FC = () => {
   const checkDrivers = async (uid: string) => {
     try {
       const collection = await storeService.collection('drivers').get();
-      collection.forEach(item => {
-        if (uid === item.data()?.uid) {
-          dispatch(driverConfirm());
-        }
-      });
+      const isDriver = collection.docs.find(item => uid === item.data()?.uid);
+      if (isDriver) {
+        dispatch(driverConfirm());
+      }
     } catch (error) {
       console.error(error);
       alert('데이터를 가져오는데 실패했습니다');

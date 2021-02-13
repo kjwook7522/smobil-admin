@@ -5,10 +5,13 @@ import { driverReject } from 'actions/driver';
 import { authService } from 'firebaseApp';
 import './Header.css';
 
-const Header: React.FC = () => {
+interface Props {
+  displayName: string | null;
+}
+
+const Header: React.FC<Props> = ({ displayName }) => {
   const dispatch = useDispatch();
-  const name = authService.currentUser?.displayName;
-  
+
   const handleSignoutClick = () => {
     dispatch(driverReject());
     authService.signOut();
@@ -17,7 +20,7 @@ const Header: React.FC = () => {
   return (
     <section id="header">
       <img src="/logo_wh.png" alt="logo" />
-      <h1 className="name">{name} 기사님</h1>
+      <h1 className="name">{displayName} 기사님</h1>
       <div className="btn-wrapper">
         <button className="header-btn" onClick={handleSignoutClick}>
           로그아웃

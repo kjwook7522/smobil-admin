@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'common/store';
 import { QueryDocumentSnapshot, storeService } from 'firebaseApp';
 import { plusStorageProd } from 'common/service/storageService';
 import { minusTrunkProd } from 'common/service/trunkService';
 import './Trunk.css';
 
-const Trunk: React.FC = () => {
-  const user = useSelector((state: RootState) => state.userReducer);
-  const { uid } = user;
-  const [myTrunk, setMyTrunk] = useState<Array<QueryDocumentSnapshot>>([]);
+interface Props {
+  uid: string;
+}
 
+const Trunk: React.FC<Props> = ({ uid }) => {
+  const [myTrunk, setMyTrunk] = useState<Array<QueryDocumentSnapshot>>([]);
+  
   useEffect(() => {
-    listenTrunkList();
+    if (uid) {
+      listenTrunkList();
+    }
   }, []);
+  
+  if (!uid) return null;
 
   const listenTrunkList = () => {
     storeService.collection(uid).onSnapshot(querySnapShot => {

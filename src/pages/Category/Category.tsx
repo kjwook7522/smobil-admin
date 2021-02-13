@@ -10,8 +10,8 @@ import './Category.css';
 
 const Category: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
-  const { uid } = user;
   const match = useRouteMatch<{ category: string }>();
+  const { uid } = user;
   const { category } = match.params;
   const [storage, setStorage] = useState<Array<QueryDocumentSnapshot>>([]);
 
