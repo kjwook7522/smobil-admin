@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from 'reducers';
+import { RootState } from 'common/store';
 import { plusTrunkProd } from 'common/service/trunkService';
 import { minusStorageProd } from 'common/service/storageService';
 import { TiArrowBack } from 'react-icons/ti';

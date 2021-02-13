@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'reducers';
+import { RootState } from 'common/store';
 import { authService } from 'firebaseApp';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import './GoogleId.css';

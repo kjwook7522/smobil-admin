@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'reducers';
+import { RootState } from 'common/store';
 import { QueryDocumentSnapshot, storeService } from 'firebaseApp';
 import { plusStorageProd } from 'common/service/storageService';
 import { minusTrunkProd } from 'common/service/trunkService';

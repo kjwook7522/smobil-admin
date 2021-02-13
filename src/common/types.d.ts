@@ -9,3 +9,8 @@ interface DefaultAction {
   type: string;
   payload: boolean;
 }
+
+interface UserAction {
+  type: string;
+  payload: User;
+}

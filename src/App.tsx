@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authService, storeService } from 'firebaseApp';
-import { initUser } from 'actions';
+import { initUser } from 'actions/user';
 import { loginOff, loginOn } from 'actions/login';
 import { loadingOff, loadingOn } from 'actions/loading';
-import { RootState } from 'reducers';
+import { RootState } from 'common/store';
 import { Loading } from 'common';
 import AppRouter from 'Router';
 import { driverConfirm } from 'actions/driver';
