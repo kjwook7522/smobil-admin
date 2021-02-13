@@ -13,68 +13,50 @@ const CategoryList: React.FC = () => {
   return (
     <section id="category-list">
       <div className="category-wrapper">
-        <div className="item">
-          <Link to="/category/battery">
-            <FaBatteryHalf />
-            <p>배터리</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/battery">
+          <FaBatteryHalf />
+          <p>배터리</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/oil">
-            <RiOilLine />
-            <p>오일</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/oil">
+          <RiOilLine />
+          <p>오일</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/oilfilter">
-            <IoIosWater />
-            <p>오일필터</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/oilfilter">
+          <IoIosWater />
+          <p>오일필터</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/airfilter">
-            <FiWind />
-            <p>에어필터</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/airfilter">
+          <FiWind />
+          <p>에어필터</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/wiper">
-            <BiTachometer />
-            <p>와이퍼</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/wiper">
+          <BiTachometer />
+          <p>와이퍼</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/washer">
-            <MdLocalCarWash />
-            <p>워셔액</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/washer">
+          <MdLocalCarWash />
+          <p>워셔액</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/pad">
-            <CgKeyboard />
-            <p>패드</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/pad">
+          <CgKeyboard />
+          <p>패드</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/aircon">
-            <BiWater />
-            <p>에어컨필터</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/aircon">
+          <BiWater />
+          <p>에어컨필터</p>
+        </Link>
 
-        <div className="item">
-          <Link to="/category/etc">
-            <BiDotsHorizontalRounded />
-            <p>기타</p>
-          </Link>
-        </div>
+        <Link className="item" to="/category/etc">
+          <BiDotsHorizontalRounded />
+          <p>기타</p>
+        </Link>
       </div>
     </section>
   );
