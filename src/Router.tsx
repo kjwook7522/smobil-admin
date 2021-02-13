@@ -5,13 +5,14 @@ import { RootState } from 'common/store';
 import Login from 'pages/Login/Login';
 import Home from 'pages/Home/Home';
 import Category from 'pages/Category/Category';
-import GoogleId from 'pages/GoogleId/GoogleId';
+import DriverAuthDeny from 'pages/DriverAuthDeny/DriverAuthDeny';
 import Admin from 'pages/Admin/Admin';
+import AdminAuthDeny from 'pages/AdminAuthDeny/AdminAuthDeny';
 
 const AppRouter: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
   const isLogin = useSelector((state: RootState) => state.loginReducer);
-  const { isDriver } = user;
+  const { isDriver, isAdmin } = user;
 
   return (
     <Router>
@@ -20,17 +21,16 @@ const AppRouter: React.FC = () => {
           <Route path="/category/:category">
             <Category />
           </Route>
-          <Route path="/admin">
-            <Admin />
-          </Route>
+          <Route path="/admin">{isAdmin ? <Admin /> : <AdminAuthDeny />}</Route>
           <Route exact path="/">
             <Home />
           </Route>
+          <Redirect to="/" />
         </Switch>
       ) : (
         <Switch>
           <Route exact path="/">
-            {isLogin ? <GoogleId /> : <Login />}
+            {isLogin ? <DriverAuthDeny /> : <Login />}
           </Route>
           <Redirect to="/" />
         </Switch>

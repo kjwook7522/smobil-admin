@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'common/store';
 import { authService } from 'firebaseApp';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import './GoogleId.css';
+import './DriverAuthDeny.css';
 
-const GoogleId: React.FC = () => {
+const DriverAuthDeny: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
 
   const goHome = () => {
@@ -13,7 +13,7 @@ const GoogleId: React.FC = () => {
   };
 
   return (
-    <section id="google-id">
+    <section id="driver-auth-deny">
       <div className="warning-box">
         <IoMdCloseCircleOutline />
         <h1>안녕하세요 {user.displayName}님.</h1>
@@ -25,4 +25,4 @@ const GoogleId: React.FC = () => {
   );
 };
 
-export default GoogleId;
+export default DriverAuthDeny;

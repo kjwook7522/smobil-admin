@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { authService, storeService } from 'firebaseApp';
-import { driverConfirm, initUser } from 'actions/user';
+import { authService, DocumentData, storeService } from 'firebaseApp';
+import { adminConfirm, adminReject, driverConfirm, initUser } from 'actions/user';
 import { loginOff, loginOn } from 'actions/login';
 import { loadingOff, loadingOn } from 'actions/loading';
 import { RootState } from 'common/store';
@@ -57,13 +57,22 @@ const App: React.FC = () => {
   const checkDrivers = async (uid: string) => {
     try {
       const collection = await storeService.collection('drivers').get();
-      const isDriver = collection.docs.find(item => uid === item.data()?.uid);
-      if (isDriver) {
+      const driver = collection.docs.find(item => uid === item.data()?.uid);
+      if (driver) {
         dispatch(driverConfirm());
+        checkAdmins(driver.data());
       }
     } catch (error) {
       console.error(error);
       alert('데이터를 가져오는데 실패했습니다');
+    }
+  };
+
+  const checkAdmins = (driver: DocumentData) => {
+    if (driver.admin) {
+      dispatch(adminConfirm());
+    } else {
+      dispatch(adminReject());
     }
   };
 

@@ -22,4 +22,4 @@ export const storeService = firebase.firestore(app);
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export type QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
-// export type User = firebase.User;
+export type DocumentData = firebase.firestore.DocumentData;
