@@ -16,7 +16,10 @@ const Category: React.FC = () => {
   const [storage, setStorage] = useState<Array<QueryDocumentSnapshot>>([]);
 
   useEffect(() => {
-    listenStorage();
+    const unsubscribe = listenStorage();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const chgNmToK = (category: string): string => {
@@ -50,7 +53,7 @@ const Category: React.FC = () => {
   };
 
   const listenStorage = () => {
-    storeService
+    return storeService
       .collection('storage')
       .where('category', '==', chgNmToK(category))
       .onSnapshot(querySnapShot => {

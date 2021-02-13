@@ -10,20 +10,13 @@ interface Props {
 
 const Trunk: React.FC<Props> = ({ uid }) => {
   const [myTrunk, setMyTrunk] = useState<Array<QueryDocumentSnapshot>>([]);
-  
-  useEffect(() => {
-    if (uid) {
-      listenTrunkList();
-    }
-  }, []);
-  
-  if (!uid) return null;
 
-  const listenTrunkList = () => {
-    storeService.collection(uid).onSnapshot(querySnapShot => {
-      setMyTrunk(querySnapShot.docs);
-    });
-  };
+  useEffect(() => {
+    const unsubscribe = listenTrunkList();
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const keepProd = (id: string) => {
     plusStorageProd(id);
@@ -32,6 +25,12 @@ const Trunk: React.FC<Props> = ({ uid }) => {
 
   const sellProd = (id: string) => {
     minusTrunkProd(id, uid);
+  };
+
+  const listenTrunkList = () => {
+    return storeService.collection(uid).onSnapshot(querySnapShot => {
+      setMyTrunk(querySnapShot.docs);
+    });
   };
 
   return (
