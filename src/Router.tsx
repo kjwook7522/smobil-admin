@@ -18,10 +18,10 @@ const AppRouter: React.FC = () => {
     <Router>
       {isLogin && isDriver ? (
         <Switch>
+          <Route exact path="/admin">{isAdmin ? <Admin /> : <AdminAuthDeny />}</Route>
           <Route path="/category/:category">
             <Category />
           </Route>
-          <Route path="/admin">{isAdmin ? <Admin /> : <AdminAuthDeny />}</Route>
           <Route exact path="/">
             <Home />
           </Route>
