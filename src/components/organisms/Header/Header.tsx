@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { driverReject } from 'actions/driver';
 import { authService } from 'firebaseApp';
 import './Header.css';
 
 const Header: React.FC = () => {
+  const dispatch = useDispatch();
   const name = authService.currentUser?.displayName;
+  
   const handleSignoutClick = () => {
+    dispatch(driverReject());
     authService.signOut();
   };
 
@@ -23,6 +28,6 @@ const Header: React.FC = () => {
       </div>
     </section>
   );
-}
+};
 
 export default Header;

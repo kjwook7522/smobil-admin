@@ -1,14 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'reducers';
 import Login from 'pages/Login/Login';
 import Home from 'pages/Home/Home';
 import Category from 'pages/Category/Category';
+import GoogleId from 'pages/GoogleId/GoogleId';
 
-interface Props {
-  isLogin: boolean;
-}
+const AppRouter: React.FC = () => {
+  const isLogin = useSelector((state: RootState) => state.loginReducer);
+  const isDriver = useSelector((state: RootState) => state.driverReducer);
 
-const AppRouter: React.FC<Props> = ({ isLogin }) => {
   return (
     <Router>
       <Switch>
@@ -16,7 +18,7 @@ const AppRouter: React.FC<Props> = ({ isLogin }) => {
           <Category />
         </Route>
         <Route exact path="/">
-          {isLogin ? <Home /> : <Login />}
+          {isLogin ? isDriver ? <Home /> : <GoogleId /> : <Login />}
         </Route>
       </Switch>
     </Router>

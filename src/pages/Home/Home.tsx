@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from 'pages/Stock/components/Header/Header';
-import CategoryList from 'pages/Stock/components/CategoryList/CategoryList';
-import Trunk from 'pages/Stock/components/Trunk/Trunk';
+import Header from 'components/organisms/Header/Header';
+import CategoryList from 'components/organisms/CategoryList/CategoryList';
+import Trunk from 'components/organisms/Trunk/Trunk';
 import './Home.css';
 
 const Home: React.FC = () => {
