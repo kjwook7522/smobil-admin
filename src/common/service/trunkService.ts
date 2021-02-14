@@ -6,6 +6,7 @@ const makeProd = async (id: string) => {
   return { ...data, count: 0 };
 };
 
+// Minus 1 count of trunk product
 export const minusTrunkProd = async (id: string, uid: string) => {
   const collection = storeService.collection(uid);
 
@@ -26,6 +27,7 @@ export const minusTrunkProd = async (id: string, uid: string) => {
   }
 };
 
+// Plus 1 count of trunk product
 export const plusTrunkProd = async (id: string, uid: string) => {
   const collection = storeService.collection(uid);
 
@@ -43,4 +45,10 @@ export const plusTrunkProd = async (id: string, uid: string) => {
     console.error(error);
     alert('상품 업데이트에 실패했습니다');
   }
+};
+
+export const listenTrunk = (uid: string, setState: React.Dispatch<React.SetStateAction<any>>) => {
+  return storeService.collection(uid).onSnapshot(querySnapShot => {
+    setState(querySnapShot.docs);
+  });
 };

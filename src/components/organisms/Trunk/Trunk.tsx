@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { QueryDocumentSnapshot, storeService } from 'firebaseApp';
+import { QueryDocumentSnapshot } from 'firebaseApp';
 import { plusStorageProd } from 'common/service/storageService';
-import { minusTrunkProd } from 'common/service/trunkService';
+import { listenTrunk, minusTrunkProd } from 'common/service/trunkService';
 import './Trunk.css';
 
 interface Props {
@@ -12,7 +12,7 @@ const Trunk: React.FC<Props> = ({ uid }) => {
   const [myTrunk, setMyTrunk] = useState<Array<QueryDocumentSnapshot>>([]);
 
   useEffect(() => {
-    const unsubscribe = listenTrunkList();
+    const unsubscribe = listenTrunk(uid, setMyTrunk);
     return () => {
       unsubscribe();
     };
@@ -25,12 +25,6 @@ const Trunk: React.FC<Props> = ({ uid }) => {
 
   const sellProd = (id: string) => {
     minusTrunkProd(id, uid);
-  };
-
-  const listenTrunkList = () => {
-    return storeService.collection(uid).onSnapshot(querySnapShot => {
-      setMyTrunk(querySnapShot.docs);
-    });
   };
 
   return (

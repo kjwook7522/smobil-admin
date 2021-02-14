@@ -3,9 +3,9 @@ import { useRouteMatch, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from 'common/store';
 import { plusTrunkProd } from 'common/service/trunkService';
-import { minusStorageProd } from 'common/service/storageService';
+import { listenStorage, minusStorageProd } from 'common/service/storageService';
 import { TiArrowBack } from 'react-icons/ti';
-import { QueryDocumentSnapshot, storeService } from 'firebaseApp';
+import { QueryDocumentSnapshot } from 'firebaseApp';
 import './Category.css';
 
 const Category: React.FC = () => {
@@ -16,7 +16,7 @@ const Category: React.FC = () => {
   const [storage, setStorage] = useState<Array<QueryDocumentSnapshot>>([]);
 
   useEffect(() => {
-    const unsubscribe = listenStorage();
+    const unsubscribe = listenStorage(chgNmToK(category), setStorage);
     return () => {
       unsubscribe();
     };
@@ -50,15 +50,6 @@ const Category: React.FC = () => {
   const addProd = (id: string) => {
     plusTrunkProd(id, uid);
     minusStorageProd(id);
-  };
-
-  const listenStorage = () => {
-    return storeService
-      .collection('storage')
-      .where('category', '==', chgNmToK(category))
-      .onSnapshot(querySnapShot => {
-        setStorage(querySnapShot.docs);
-      });
   };
 
   return (
