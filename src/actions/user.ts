@@ -16,6 +16,7 @@ export const removeUser = (): UserAction => ({
     uid: '',
     email: '',
     displayName: '',
+    isLogin: false,
     isDriver: false,
     isAdmin: false,
   },

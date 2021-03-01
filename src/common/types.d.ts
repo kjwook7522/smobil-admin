@@ -9,8 +9,15 @@ interface User {
   uid: string;
   email: string | null;
   displayName: string | null;
-  isDriver?: boolean;
-  isAdmin?: boolean;
+  isLogin: boolean;
+  isDriver: boolean;
+  isAdmin: boolean;
+}
+
+interface MyTrunk {
+  uid: string;
+  displayName: string;
+  trunk: Array<any>;
 }
 
 interface DefaultAction {
