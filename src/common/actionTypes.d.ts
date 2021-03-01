@@ -18,3 +18,13 @@ interface TrunkCountAction {
   uid: string;
   id: string;
 }
+
+interface StorageInitAction {
+  type: 'INIT_STORAGE';
+  storageList: ProductionList;
+}
+
+interface StorageCountAction {
+  type: 'PLUS_STORAGE_PROD' | 'MINUS_STORAGE_PROD';
+  id: string;
+}

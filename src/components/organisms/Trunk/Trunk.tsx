@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'common/store';
+import { initTrunk, minusTrunkProd } from 'actions/trunk';
+import { plusStorageProd } from 'actions/storage';
 import { getTrunkProds } from 'common/service/trunkService';
 import './Trunk.css';
-import { initTrunk, minusTrunkProd } from 'actions/trunk';
 
 interface Props {
   uid: string;
@@ -36,8 +37,7 @@ const Trunk: React.FC<Props> = ({ uid }) => {
 
   const keepProd = (id: string) => {
     dispatch(minusTrunkProd(uid, id));
-    // plusStorageProd(id);
-    // minusTrunkProd(id, uid);
+    dispatch(plusStorageProd(id));
   };
 
   const sellProd = (id: string) => {

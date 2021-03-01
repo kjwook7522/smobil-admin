@@ -1,61 +1,77 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'common/store';
-import { plusTrunkProd } from 'common/service/trunkService';
-import { listenStorage, minusStorageProd } from 'common/service/storageService';
+import { initStorage, minusStorageProd } from 'actions/storage';
+import { plusTrunkProd } from 'actions/trunk';
+import { getStorages } from 'common/service/storageService';
 import { TiArrowBack } from 'react-icons/ti';
-import { QueryDocumentSnapshot } from 'firebaseApp';
 import './Category.css';
+
+const convertNameToKorean = (category: string): string => {
+  switch (category) {
+    case 'battery':
+      return '배터리';
+    case 'oil':
+      return '오일';
+    case 'oilfilter':
+      return '오일필터';
+    case 'airfilter':
+      return '에어필터';
+    case 'wiper':
+      return '와이퍼';
+    case 'washer':
+      return '워셔액';
+    case 'pad':
+      return '패드';
+    case 'aircon':
+      return '에어컨필터';
+    case 'etc':
+      return '기타';
+    default:
+      return '';
+  }
+};
 
 const Category: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
   const match = useRouteMatch<{ category: string }>();
+  const dispatch = useDispatch();
   const { uid } = user;
-  const { category } = match.params;
-  const [storage, setStorage] = useState<Array<QueryDocumentSnapshot>>([]);
+  const category = convertNameToKorean(match.params.category);
+  const storage = useSelector((state: RootState) => state.storageReducer);
 
   useEffect(() => {
-    const unsubscribe = listenStorage(chgNmToK(category), setStorage);
-    return () => {
-      unsubscribe();
-    };
+    fetchStorage(category);
   }, []);
 
-  const chgNmToK = (category: string): string => {
-    switch (category) {
-      case 'battery':
-        return '배터리';
-      case 'oil':
-        return '오일';
-      case 'oilfilter':
-        return '오일필터';
-      case 'airfilter':
-        return '에어필터';
-      case 'wiper':
-        return '와이퍼';
-      case 'washer':
-        return '워셔액';
-      case 'pad':
-        return '패드';
-      case 'aircon':
-        return '에어컨필터';
-      case 'etc':
-        return '기타';
-      default:
-        return '';
-    }
+  const fetchStorage = async (category: string) => {
+    const result = await getStorages(category);
+    let storage: ProductionList = [];
+    result.forEach(prod => {
+      const data = prod.data();
+      const tempProd: Production = {
+        id: data.id,
+        category: data.catgeory,
+        name: data.name,
+        count: data.count,
+      };
+
+      storage.push(tempProd);
+    });
+
+    dispatch(initStorage(storage));
   };
 
   const addProd = (id: string) => {
-    plusTrunkProd(id, uid);
-    minusStorageProd(id);
+    dispatch(plusTrunkProd(uid, id));
+    dispatch(minusStorageProd(id));
   };
 
   return (
     <section id="category">
       <div className="header">
-        <h1>{chgNmToK(category)}</h1>
+        <h1>{category}</h1>
         <Link to="/">
           <TiArrowBack />
         </Link>
@@ -71,15 +87,14 @@ const Category: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {storage.map(item => {
-            const data = item.data();
+          {storage.map(prod => {
             return (
-              <tr key={data.id} id={data.id}>
-                <td>{data.category}</td>
-                <td>{data.name}</td>
-                <td>{data.count}</td>
+              <tr key={prod.id} id={prod.id}>
+                <td>{prod.category}</td>
+                <td>{prod.name}</td>
+                <td>{prod.count}</td>
                 <td>
-                  <button onClick={() => addProd(data.id)}>담기</button>
+                  <button onClick={() => addProd(prod.id)}>담기</button>
                 </td>
               </tr>
             );
