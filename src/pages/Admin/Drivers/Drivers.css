@@ -62,6 +62,22 @@
   background-color: #ccc;
 }
 
+#drivers .driver-board .driver-table thead tr:nth-child(1) {
+  width: 15%;
+}
+
+#drivers .driver-board .driver-table thead tr:nth-child(2) {
+  width: 15%;
+}
+
+#drivers .driver-board .driver-table thead tr:nth-child(4) {
+  width: 15%;
+}
+
+#drivers .driver-board .driver-table thead tr:nth-child(5) {
+  width: 15%;
+}
+
 #drivers .driver-board .driver-table thead th {
   padding: 5px 0;
 }
