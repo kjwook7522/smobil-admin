@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authService } from 'firebaseApp';
-import { adminConfirm, adminReject, driverConfirm, driverReject, initUser, removeUser } from 'actions/user';
+import { initUser, removeUser } from 'actions/user';
 import { Loading } from 'common';
 import AppRouter from 'Router';
 import { getDriver } from 'common/service/driverService';
