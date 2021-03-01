@@ -1,3 +1,5 @@
+type ProductionList = Array<Production>;
+
 interface Production {
   id: string;
   name: string;
@@ -18,14 +20,4 @@ interface MyTrunk {
   uid: string;
   displayName: string;
   trunk: Array<any>;
-}
-
-interface DefaultAction {
-  type: string;
-  payload: boolean;
-}
-
-interface UserAction {
-  type: string;
-  user: User;
 }

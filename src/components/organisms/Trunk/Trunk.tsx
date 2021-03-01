@@ -1,30 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { QueryDocumentSnapshot } from 'firebaseApp';
-import { plusStorageProd } from 'common/service/storageService';
-import { listenTrunk, minusTrunkProd } from 'common/service/trunkService';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'common/store';
+import { getTrunkProds } from 'common/service/trunkService';
 import './Trunk.css';
+import { initTrunk, minusTrunkProd } from 'actions/trunk';
 
 interface Props {
   uid: string;
 }
 
 const Trunk: React.FC<Props> = ({ uid }) => {
-  const [myTrunk, setMyTrunk] = useState<Array<QueryDocumentSnapshot>>([]);
+  const dispatch = useDispatch();
+  const myTrunk = useSelector((state: RootState) => state.trunkReducer);
 
   useEffect(() => {
-    const unsubscribe = listenTrunk(uid, setMyTrunk);
-    return () => {
-      unsubscribe();
-    };
+    fetchMyTrunk(uid);
   }, []);
 
+  const fetchMyTrunk = async (uid: string) => {
+    const result = await getTrunkProds(uid);
+    let myTrunk: ProductionList = [];
+    result.forEach(prod => {
+      const data = prod.data();
+      const tempProd: Production = {
+        id: data.id,
+        category: data.catgeory,
+        name: data.name,
+        count: data.count,
+      };
+
+      myTrunk.push(tempProd);
+    });
+    dispatch(initTrunk(myTrunk));
+  };
+
   const keepProd = (id: string) => {
-    plusStorageProd(id);
-    minusTrunkProd(id, uid);
+    dispatch(minusTrunkProd(uid, id));
+    // plusStorageProd(id);
+    // minusTrunkProd(id, uid);
   };
 
   const sellProd = (id: string) => {
-    minusTrunkProd(id, uid);
+    dispatch(minusTrunkProd(uid, id));
   };
 
   return (
@@ -41,20 +58,19 @@ const Trunk: React.FC<Props> = ({ uid }) => {
           </tr>
         </thead>
         <tbody>
-          {myTrunk.map(item => {
-            const data = item.data();
+          {myTrunk.map(prod => {
             return (
-              <tr key={data.id} id={data.id}>
+              <tr key={prod.id} id={prod.id}>
                 <td className="btn">
-                  <button className="keep-btn" onClick={() => keepProd(data.id)}>
+                  <button className="keep-btn" onClick={() => keepProd(prod.id)}>
                     재고
                   </button>
                 </td>
-                <td className="type">{data.category}</td>
-                <td className="name">{data.name}</td>
-                <td className="counts">{data.count}</td>
+                <td className="type">{prod.category}</td>
+                <td className="name">{prod.name}</td>
+                <td className="counts">{prod.count}</td>
                 <td className="btn">
-                  <button className="sell-btn" onClick={() => sellProd(data.id)}>
+                  <button className="sell-btn" onClick={() => sellProd(prod.id)}>
                     판매
                   </button>
                 </td>

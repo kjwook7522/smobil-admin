@@ -1,9 +1,20 @@
 import { storeService } from 'firebaseApp';
+import { useState } from 'react';
 
 const makeProd = async (id: string) => {
   const doc = await storeService.collection('storage').doc(id).get();
   const data = doc.data();
   return { ...data, count: 0 };
+};
+
+export const getTrunkProds = async (uid: string) => {
+  const collection = await storeService.collection(uid).get();
+  const trunkProds = collection.docs;
+  return trunkProds;
+};
+
+export const updateTrunkProd = async (uid: string, id: string, count: number) => {
+  await storeService.collection(uid).doc(id).update({ count });
 };
 
 // Minus 1 count of trunk product
@@ -51,4 +62,18 @@ export const listenTrunk = (uid: string, setState: React.Dispatch<React.SetState
   return storeService.collection(uid).onSnapshot(querySnapShot => {
     setState(querySnapShot.docs);
   });
+};
+
+export const useListenTrunks = (uidList: Array<string>) => {
+  type unsubscribeType = () => void;
+  const [trunks, setTrunks] = useState<Array<MyTrunk>>([]);
+  let unsubscribeList: Array<unsubscribeType> = [];
+
+  uidList.forEach(uid => {
+    const unsubscribe = storeService.collection(uid).onSnapshot(querySnapShot => {
+      setTrunks([...trunks, { uid, displayName: '1', trunk: querySnapShot.docs }]);
+    });
+    unsubscribeList.push(unsubscribe);
+  });
+  return [trunks, unsubscribeList];
 };

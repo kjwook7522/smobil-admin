@@ -60,19 +60,6 @@ const App: React.FC = () => {
         isDriver = true;
         isAdmin = driver.data().admin;
       }
-
-      // if (driver) {
-      //   dispatch(driverConfirm());
-
-      //   const isAdmin = driver.data()?.admin;
-      //   if (isAdmin) {
-      //     dispatch(adminConfirm());
-      //   } else {
-      //     dispatch(adminReject());
-      //   }
-      // } else {
-      //   dispatch(driverReject());
-      // }
     } catch (error) {
       console.error(error);
       alert('데이터를 가져오는데 실패했습니다');
