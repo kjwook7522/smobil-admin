@@ -13,9 +13,13 @@ export const storageReducer = (state = initState, action: StorageInitAction | St
       return action.storageList;
 
     case PLUS_STORAGE_PROD:
-      prodIdx = copyState.findIndex(prod => prod.id === action.id);
-      count = copyState[prodIdx].count;
-      copyState[prodIdx].count += 1;
+      // if page route main, then state is empty
+      // so if state is empty, skip below
+      if (copyState.length !== 0) {
+        prodIdx = copyState.findIndex(prod => prod.id === action.id);
+        count = copyState[prodIdx].count;
+        copyState[prodIdx].count += 1;
+      }
 
       updateStorageProd(action.id, count + 1);
 

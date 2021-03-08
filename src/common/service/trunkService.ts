@@ -1,11 +1,4 @@
 import { storeService } from 'firebaseApp';
-import { useState } from 'react';
-
-const makeProd = async (id: string) => {
-  const doc = await storeService.collection('storage').doc(id).get();
-  const data = doc.data();
-  return { ...data, count: 0 };
-};
 
 export const getTrunkProds = async (uid: string) => {
   const collection = await storeService.collection(uid).get();
@@ -14,7 +7,33 @@ export const getTrunkProds = async (uid: string) => {
 };
 
 export const updateTrunkProd = async (uid: string, id: string, count: number) => {
-  await storeService.collection(uid).doc(id).update({ count });
+  try {
+    await storeService.collection(uid).doc(id).update({ count });
+  } catch (error) {
+    
+  }
+};
+
+export const addTrunkProd = async (uid: string, id: string) => {
+  const doc = await storeService.collection('storage').doc(id).get();
+  const data = doc.data();
+  await storeService
+    .collection(uid)
+    .doc(id)
+    .set({ ...data, count: 1 });
+  return data;
+};
+
+export const removeTrunkProd = async (uid: string, id: string) => {
+  await storeService.collection(uid).doc(id).delete();
+};
+
+///////////////////////////////////////
+
+const makeProd = async (id: string) => {
+  const doc = await storeService.collection('storage').doc(id).get();
+  const data = doc.data();
+  return { ...data, count: 0 };
 };
 
 // Minus 1 count of trunk product
@@ -56,24 +75,4 @@ export const plusTrunkProd = async (id: string, uid: string) => {
     console.error(error);
     alert('상품 업데이트에 실패했습니다');
   }
-};
-
-export const listenTrunk = (uid: string, setState: React.Dispatch<React.SetStateAction<any>>) => {
-  return storeService.collection(uid).onSnapshot(querySnapShot => {
-    setState(querySnapShot.docs);
-  });
-};
-
-export const useListenTrunks = (uidList: Array<string>) => {
-  type unsubscribeType = () => void;
-  const [trunks, setTrunks] = useState<Array<MyTrunk>>([]);
-  let unsubscribeList: Array<unsubscribeType> = [];
-
-  uidList.forEach(uid => {
-    const unsubscribe = storeService.collection(uid).onSnapshot(querySnapShot => {
-      setTrunks([...trunks, { uid, displayName: '1', trunk: querySnapShot.docs }]);
-    });
-    unsubscribeList.push(unsubscribe);
-  });
-  return [trunks, unsubscribeList];
 };
