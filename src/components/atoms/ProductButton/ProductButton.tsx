@@ -24,12 +24,14 @@ const ProductButton: React.FC<Props> = ({ children, buttonType, loading, ...prop
         {loading ? <FaSpinner className="spin" /> : children}
       </StyledProductButton>
     );
-  } else {
+  } else if (buttonType === 'put') {
     return (
       <StyledProductButton put disabled={loading} {...props}>
         {loading ? <FaSpinner className="spin" /> : children}
       </StyledProductButton>
     );
+  } else {
+    return null;
   }
 };
 
