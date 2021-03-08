@@ -25,7 +25,7 @@ const Trunk: React.FC<Props> = ({ uid }) => {
       const data = prod.data();
       const tempProd: Production = {
         id: data.id,
-        category: data.catgeory,
+        category: data.category,
         name: data.name,
         count: data.count,
       };
